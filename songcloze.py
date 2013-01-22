@@ -1,11 +1,31 @@
 #!/usr/bin/env python
+
 # Anki Lyrics/Poetry Cloze Generator
-# Copyright 2013 Soren Bjornstad
-# Contact: soren@sorenbjornstad.com
+# Copyright 2013 Soren Bjornstad.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Contact Me:
+# soren@sorenbjornstad.com
 # http://www.thetechnicalgeekery.com/anki
 
-# Set this to the location of Anki on your system to allow automatic imports.
+###############################################################################
+# Set this to the location of Anki on your system to allow automatic imports. 
+
 ankipath = "/home/soren/code/anki/unstable/anki/runanki"
+
+###############################################################################
 
 import tempfile
 import os
@@ -14,7 +34,7 @@ from subprocess import call
 
 def print_help():
     print "    Lyrics/Poetry Cloze Generator"
-    print "    Copyright 2013 Soren Bjornstad; see LICENSE for details.\n"
+    print "    Copyright 2013 Soren Bjornstad; see COPYING for details.\n"
     print "    Input File: Drag and drop the input file you wish to use " \
               "onto this window."
     print "    Title:      This will be used to prompt you for the first line " \
