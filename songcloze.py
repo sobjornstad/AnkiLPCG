@@ -4,9 +4,8 @@
 # Contact: soren@sorenbjornstad.com
 # http://www.thetechnicalgeekery.com/anki
 
-# You need to set this to the location of Anki on your system.
-#ankipath = "/home/soren/code/anki/unstable/anki/runanki"
-ankipath = ""
+# Set this to the location of Anki on your system to allow automatic imports.
+ankipath = "/home/soren/code/anki/unstable/anki/runanki"
 
 import tempfile
 import os
@@ -27,7 +26,7 @@ def print_help():
 def get_data(msg):
     data = ''
     while not data:
-        data = raw_input("%s: " %msg)
+        data = raw_input("%s: " % msg)
 
     return data.strip()
 
@@ -43,7 +42,7 @@ def main():
     # Ask user for file and song names.
     input_file = get_data("Input File")
     title = get_data("Title")
-    tag = get_data("Tags")
+    tags = get_data("Tags")
 
     # Open input and output files.
     lyrics_file = open(input_file)
@@ -82,6 +81,7 @@ def main():
         i += 1
 
     # Write cards.
+    anki_file.write("tags:%s\n" % tags)
     anki_file.write(cards_data)
     anki_file.close()
     lyrics_file.close()
