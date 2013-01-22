@@ -1,10 +1,12 @@
 #!/usr/bin/env python
-# Song Cloze Generator
-# by Soren Bjornstad
-# Contact: soren.bjornstad@gmail.com
+# Anki Lyrics/Poetry Cloze Generator
+# Copyright 2013 Soren Bjornstad
+# Contact: soren@sorenbjornstad.com
 # http://www.thetechnicalgeekery.com/anki
 
-ankipath = "/home/soren/code/anki/unstable/anki/runanki"
+# You need to set this to the location of Anki on your system.
+#ankipath = "/home/soren/code/anki/unstable/anki/runanki"
+ankipath = ""
 
 import tempfile
 import os
@@ -84,7 +86,14 @@ def main():
     anki_file.close()
     lyrics_file.close()
 
-    # Import file to Anki.
-    open_anki(anki_file)
+    # Import file to Anki, if a location has been set.
+    if ankipath and os.path.exists(ankipath):
+        open_anki(anki_file)
+    else:
+        print "\nDone! Now import the file %s into Anki. To avoid having to " \
+              "do this manually in the future,\nconsider setting the path " \
+              "to Anki in the script file, as described in the README." \
+              % anki_file.name
+        raw_input("== Press Enter to close the Generator. ==")
 
 main()
