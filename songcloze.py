@@ -5,10 +5,6 @@
 # http://www.thetechnicalgeekery.com/anki
 
 ankipath = "/home/soren/code/anki/unstable/anki/runanki"
-default_input = ''
-default_output = ''
-default_title = ''
-tag_separator = ''
 
 import tempfile
 import os
@@ -83,7 +79,7 @@ def main():
         current_line = next_line(lyrics_file)
         i += 1
 
-    # Write cards and clean up.
+    # Write cards.
     anki_file.write(cards_data)
     anki_file.close()
     lyrics_file.close()
