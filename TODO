@@ -1,3 +1,4 @@
 * Provide options for things and ability to make an ini file? Maybe more trouble than it's worth.
-* Change to CONTEXT being the first field and the unique one.
 * Develop a workable readme.
+* Make a way for LPCG to detect Anki's path on different OS's if at all
+  possible. In the README I am assuming that we can do this.

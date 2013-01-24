@@ -1,4 +1,132 @@
-#TODO
+*Warning. This README is incomplete and not 100% correct. However, it is so much
+better than the README that I previously had posted here that I decided to
+update with this one anyway.  Hopefully I will have a complete version finished
+soon, as most of the part I have done is correct.*
+
+Anki Lyrics/Poetry Cloze Generator (LPCG) is a Python script to ease the
+creation of Anki cards for memorizing a long passage of text verbatim, such as
+poetry or song lyrics.
+
+Theory
+======
+
+It is extremely difficult and very bad form to put an entire poem into Anki and
+try to memorize it as a single card. What people often want to do is define an
+order of the cards, so that Anki asks them for the lines in order. At first
+glance this seems to make sense: when you want to recite a poem or sing a song,
+you go through it in order, right? But spaced repetition and Anki work well only
+when the cards are placed in random order. Therefore, the trick is to provide
+enough context that you can figure out what point in the text you are at on
+every card.
+
+I have found that two lines of context is enough to allow me to recall the
+third line without being excessively long. When studying, I sing through the
+first two lines of the lyrics, then try to answer the third. My goal is to go
+for fluency so I don't have to stop and think, like I would if I were singing
+it.
+
+You probably won't be able to recite a poem or sing a song completely fluently
+after studying this way--that isn't the point. However, you will know the
+entirety of the text, and if you run through it a couple of times and correct
+yourself on any weak points, you probably will be able to do it the next time.
+And better yet, you will continue to remember it on at least this level even if
+you never see or hear of the song or poem outside of Anki for 25 years, enough
+that even if you've lost your fluency you'll be able to pick it up again
+quickly.
+
+LPCG allows you to easily generate overlapping cloze deletion cards with two
+lines of context for the entire text of a song or poem. Read on to find out how.
+
+
+Generating Input Files
+======================
+
+LPCG accepts simple text files as input. Each line of the song/poem should be
+on a separate physical line of the text file, just as you would normally write
+it. For instance:
+
+    Tyger! Tyger! burning bright
+    In the forests of the night,
+    What immortal hand or eye
+    Could frame thy fearful symmetry?
+
+You should *not* use blank lines between stanzas, as this will cause a nasty
+blank line to appear in your Anki cards (the cloze will contain nothing).
+Instead, I like to put an (E) at the end of the final line of a stanza. This
+way, the generated card will look something like this:
+
+    What immortal hand or eye
+    Could frame thy fearful symmetry? (E)
+    [...]
+
+This allows you to know that the next line is the start of the next stanza
+while still looking good and not producing useless cards.
+
+I haven't run into any encoding issues myself; I've saved my files in ASCII or
+UTF-8. LPCG is *not* written to process text in Unicode at the moment, so if
+you need non-Latin characters you may be in trouble. If you need this, please
+contact me and I'll see what I can do about adding it.
+
+Installing the Note Type
+========================
+
+In order to use LPCG, you first need to add the LPCG note type to your
+collection. LPCG ships with a file called "lpcg\_note\_type.apkg," which
+contains one card of the LPCG note type. You can import this into Anki by
+double-clicking on it; if it succeeds, one dummy card will be added to your
+Default deck. After the import is successful, you may safely delete this test
+card and the note type will remain.
+
+Installing the Script
+=====================
+
+Mac OS X and nearly all Linux distributions come with Python preinstalled. If
+you want to check to be sure, open a terminal (Applications -> Utilities ->
+Terminal on a Mac) and type "python". If you get a version number and a >>>
+prompt, you're good. If it's not there for some reason, install it through your
+distribution's package manager or Google for instructions if necessary.
+
+On Windows, you can check if you have Python by attempting to start LPCG by
+double-clicking on it.  If Windows tells you it doesn't recognize the file type,
+you need to install Python. You can download Python from
+<http://python.org/download/releases/2.7.3/>. If you know you have a 64-bit
+operating system, download the Windows X86-64 MSI installer; otherwise, download
+the Windows x86 MSI installer. Installation is straightforward and works just
+like installing any other program.
+
+Once you've gotten Python installed (if necessary), you're ready to run LPCG:
+just double-click on lpcg.py to get started. No installation of LPCG itself is
+required, so simply put the file in a convenient place to run when desired.
+
+Running the Script
+==================
+
+When you run LPCG, you will be shown a copyright notice and a brief help screen.
+Here's what information you need to give it:
+
+1. *Input File.* Use your file manager (e.g., Windows Explorer, Finder) to
+   locate a file of lyrics or poetry formatted for LPCG (see the section
+   Generating Input Files). Drag and drop the file onto the LPCG terminal
+   window; the path to the file should appear. Press _Enter_.
+2. *Title.* Enter the title of the song here and press _Enter_. The title will
+   be used to provide context when you're asked for the first line of the song
+   or poem (otherwise, the question for the first line of a text would be
+   indistinguishable from any others you studied).
+3. *Tags.* If you want to add tags to all of the cards you're about to import,
+   type them and press Enter. (Remember that tags are separated by spaces in
+   Anki and cannot themselves contain spaces.) I like to add the title separated
+   by underscores or in CamelCase (e.g., "the\_tyger" or "TheTyger") so that I
+   can easily search for all the cards of a given song later on.
+
+After entering this information, LPCG should generate the cards, write them to a
+temporary file, and pull up Anki's import screen. Proceed to the next section.
+
+Importing into Anki
+===================
+
+Studying
+========
+
 
 This is not a readme, this is scraps that might be useful for writing a readme. I'll get to it sometime.
 
