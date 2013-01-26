@@ -2,6 +2,21 @@ Anki Lyrics/Poetry Cloze Generator (LPCG) is a Python script to ease the
 creation of Anki cards for memorizing a long passage of text verbatim, such as
 poetry or song lyrics.
 
+For more information on Anki, see <http://ankisrs.net>.
+
+Support
+=======
+
+If you have any questions which are not answered by this manual, you may either
+email me at *anki@sorenbjornstad.com* or post on the Anki help forum
+(<https://groups.google.com/forum/?fromgroups=#!forum/ankisrs>). I read the
+forum daily, as I am employed answering support questions for Anki proper
+there.
+
+If you have found a bug or wish to suggest an improvement, you may post on the
+issue tracker or submit a pull request at GitHub:
+<https://github.com/sobjornstad/AnkiLPCG>.
+
 Theory
 ======
 
@@ -88,6 +103,14 @@ Once you've gotten Python installed (if necessary), you're ready to run LPCG:
 just double-click on lpcg.py to get started. No installation of LPCG itself is
 required, so simply put the file in a convenient place to run when desired.
 
+On Linux and Mac OS X, you may need to set the script as executable first.
+(You'll know this if you attempt to run it and nothing happens or a text editor
+opens instead.) You can either do this through your file browser (details
+depend on your computer), or universally by opening a terminal (Applications ->
+Utilities -> Terminal on a Mac), typing *sudo chmod 755*, then a space, then
+dragging and dropping the script onto the terminal window, and finally pressing
+Enter.
+
 Setting a Custom Anki Location
 ==============================
 
@@ -121,6 +144,9 @@ page) and provide the path and I will add it.
 
 Running the Script
 ==================
+
+On Windows, double-click on the file. On Linux, run './lpcg.py'. On Mac OS X, I
+believe you can double-click as well, but I'm not certain.
 
 When you run LPCG, you will be shown a copyright notice and a brief help screen.
 Here's what information you need to give it:
@@ -188,10 +214,3 @@ you'll probably know it fairly well. If you would like to practice fluency, you
 can copy and paste larger chunks such as whole stanzas into new Anki cards
 manually, or even add a card that asks you to try saying/singing the whole
 thing.
-
-Contact Me
-==========
-
-If you have questions, comments, suggestions, or improvements, you may post
-something on the GitHub issue tracker, submit a pull request, or email me at
-anki@sorenbjornstad.com.
