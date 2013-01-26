@@ -21,14 +21,17 @@
 # http://www.thetechnicalgeekery.com/anki
 
 ###############################################################################
-# Set this to the location of Anki on your system to allow automatic imports. 
+# If Anki is installed in a nonstandard location on your system, set this to
+# the path to the executable that needs to be run to start Anki.
 
-ankipath = "/home/soren/code/anki/unstable/anki/runanki"
+#custom_anki_location = "/home/soren/code/anki/unstable/anki/runanki"
+custom_anki_location = ''
 
 ###############################################################################
 
 import tempfile
 import os
+import sys
 from sys import argv
 from subprocess import call
 
@@ -41,7 +44,7 @@ def print_help():
               "of the text."
     print "    Tags:       This will be fed to Anki as the Tags field of each " \
               "card."
-    print "\n    For further help, see the README file.\n"
+    print "\n    For further help, see the README.\n"
 
 def get_data(msg):
     data = ''
@@ -53,10 +56,49 @@ def get_data(msg):
 def next_line(file):
     return (file.readline().rstrip())
 
+def locate_anki_executable():
+    if custom_anki_location:
+        if os.path.exists(custom_anki_location):
+            return custom_anki_location
+        else:
+            print "*****\nError: Your custom Anki location does not exist! " \
+                  "Please check the pathname and\n       try again.\n*****\n"
+            return None
+
+    if sys.platform.startswith('win32'):
+        # based on whether we're using 32- or 64-bit Windows
+        if 'PROGRAMFILES(X86)' in os.environ:
+            anki_location = os.environ['PROGRAMFILES(X86)']
+        else:
+            anki_location = os.environ['PROGRAMFILES']
+
+        anki_location = anki_location + '\Anki\\anki.exe'
+
+    elif sys.platform.startswith('linux2'):
+        anki_location = 'anki'
+
+    elif sys.platform.startswith('darwin'):
+        # from 'so good-looking it hurts' on Anki forum; not tested personally
+        anki_location = '/Applications/Anki.app/Contents/MacOS/Anki'
+
+
+    if os.path.exists(anki_location):
+        return anki_location
+    else:
+        print "*****" \
+              "\nWARNING: LPCG could not locate your Anki executable and " \
+              "will not be able to\n         automatically import the" \
+              "generated cloze deletions. To solve this\n         problem, " \
+              "please see the \"Setting a Custom Anki Location\" section in " \
+              "the\n         README." \
+              "\n*****\n"
+
+
 def open_anki(anki_file):
     call([ankipath, anki_file.name])
 
 def main():
+    locate_anki_executable()
     print_help()
 
     # Ask user for file and song names.
