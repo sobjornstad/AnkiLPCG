@@ -24,8 +24,8 @@
 # If Anki is installed in a nonstandard location on your system, set this to
 # the path to the executable that needs to be run to start Anki.
 
-#custom_anki_location = "/home/soren/code/anki/unstable/anki/runanki"
-custom_anki_location = ''
+custom_anki_location = "/home/soren/code/anki/unstable/anki/runanki"
+#custom_anki_location = ''
 
 ###############################################################################
 
@@ -87,18 +87,19 @@ def locate_anki_executable():
     else:
         print "*****" \
               "\nWARNING: LPCG could not locate your Anki executable and " \
-              "will not be able to\n         automatically import the" \
+              "will not be able to\n         automatically import the " \
               "generated cloze deletions. To solve this\n         problem, " \
               "please see the \"Setting a Custom Anki Location\" section in " \
               "the\n         README." \
               "\n*****\n"
+        return None
 
 
-def open_anki(anki_file):
+def open_anki(ankipath, anki_file):
     call([ankipath, anki_file.name])
 
 def main():
-    locate_anki_executable()
+    ankipath = locate_anki_executable()
     print_help()
 
     # Ask user for file and song names.
@@ -148,9 +149,9 @@ def main():
     anki_file.close()
     lyrics_file.close()
 
-    # Import file to Anki, if a location has been set.
-    if ankipath and os.path.exists(ankipath):
-        open_anki(anki_file)
+    # Import file to Anki, if a location has been found.
+    if ankipath:
+        open_anki(ankipath, anki_file)
     else:
         print "\nDone! Now import the file %s into Anki. To avoid having to " \
               "do this manually in the future,\nconsider setting the path " \
