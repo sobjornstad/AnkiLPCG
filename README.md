@@ -8,7 +8,7 @@ Support
 =======
 
 If you have any questions which are not answered by this manual, you may either
-email me at *anki@sorenbjornstad.com* or post on the Anki help forum
+email me at anki@sorenbjornstad.com or post on the Anki help forum
 (<https://groups.google.com/forum/?fromgroups=#!forum/ankisrs>). I read the
 forum daily, as I am employed answering support questions for Anki proper
 there.
@@ -36,13 +36,12 @@ for fluency so I don't have to stop and think, like I would if I were singing
 it.
 
 You probably won't be able to recite a poem or sing a song completely fluently
-after studying this way--that isn't the point. However, you will know the
-entirety of the text, and if you run through it a couple of times and correct
-yourself on any weak points, you probably will be able to do it the next time.
-And better yet, you will continue to remember it on at least this level even if
-you never see or hear of the song or poem outside of Anki for 25 years, enough
-that even if you've lost your fluency you'll be able to pick it up again
-quickly.
+after studying this way. However, you should know the text quite well, and if
+you run through it a couple of times and correct yourself on any weak points,
+you probably will be able to do it the next time. And better yet, you will
+continue to remember it on at least this level even if you never see or hear of
+the song or poem outside of Anki for 25 years, enough that even if you've lost
+your fluency you'll be able to pick it up again quickly.
 
 LPCG allows you to easily generate overlapping cloze deletion cards with two
 lines of context for the entire text of a song or poem. Read on to find out how.
@@ -99,17 +98,12 @@ operating system, download the Windows X86-64 MSI installer; otherwise, download
 the Windows x86 MSI installer. Installation is straightforward and works just
 like installing any other program.
 
-Once you've gotten Python installed (if necessary), you're ready to run LPCG:
-just double-click on lpcg.py to get started. No installation of LPCG itself is
-required, so simply put the file in a convenient place to run when desired.
-
-On Linux and Mac OS X, you may need to set the script as executable first.
-(You'll know this if you attempt to run it and nothing happens or a text editor
-opens instead.) You can either do this through your file browser (details
-depend on your computer), or universally by opening a terminal (Applications ->
-Utilities -> Terminal on a Mac), typing *sudo chmod 755*, then a space, then
-dragging and dropping the script onto the terminal window, and finally pressing
-Enter.
+On Linux and Mac OS X, you may need to set the script as executable. (You'll
+know this if you attempt to run it and nothing happens or a text editor opens
+instead.) You can either do this through your file browser (details depend on
+your computer), or universally by opening a terminal (Applications -> Utilities
+-> Terminal on a Mac), typing *sudo chmod 755*, then a space, then dragging and
+dropping the script onto the terminal window, and finally pressing Enter.
 
 Setting a Custom Anki Location
 ==============================
@@ -119,9 +113,9 @@ LPCG assumes that your Anki executable is stored in one of these locations:
 - '/Applications/Anki.app/Contents/MacOS/Anki' on Mac OS X
 - 'anki' (on the system path) on Linux
 
-If it isn't, you'll receive a warning on starting LPCG telling you to define a
-custom Anki location. You don't *have* to do this, but if you don't you'll have
-to manually import a temporary file in an awkward location every time you
+If it isn't, you'll receive a warning when you start LPCG telling you to define
+a custom Anki location. You don't *have* to do this, but if you don't you'll
+have to manually import a temporary file in an awkward location every time you
 generate cards. Here's how to fix it:
 
 1. Find a shortcut to Anki, open up the Properties for it, and determine the
@@ -139,8 +133,8 @@ generate cards. Here's how to fix it:
 5. Save the file and restart LPCG. The warning message should be gone now.
 
 If you believe that you installed Anki in a standard location and LPCG should
-search that location by default, please contact me (see the last section on this
-page) and provide the path and I will add it.
+search that location by default, please contact me (see the Support section)
+and provide the path and I will add it.
 
 Running the Script
 ==================
@@ -152,18 +146,18 @@ When you run LPCG, you will be shown a copyright notice and a brief help screen.
 Here's what information you need to give it:
 
 1. *Input File.* Use your file manager (e.g., Windows Explorer, Finder) to
-   locate a file of lyrics or poetry formatted for LPCG (see the section
-   Generating Input Files). Drag and drop the file onto the LPCG terminal
-   window; the path to the file should appear. Press _Enter_.
-2. *Title.* Enter the title of the song here and press _Enter_. The title will
-   be used to provide context when you're asked for the first line of the song
-   or poem (otherwise, the question for the first line of a text would be
-   indistinguishable from any others you studied).
+   locate a previously created file of lyrics or poetry formatted for LPCG (see
+   the section Generating Input Files). Drag and drop the file onto the LPCG
+   terminal window; the path to the file should appear. Press _Enter_.
+2. *Title.* Enter the title of the song or poem here and press _Enter_. The
+   title will be used to provide context when you're asked for the first line
+   of the song or poem (otherwise, the question for the first line of a text
+   would be indistinguishable from any others you studied).
 3. *Tags.* If you want to add tags to all of the cards you're about to import,
    type them and press Enter. (Remember that tags are separated by spaces in
-   Anki and cannot themselves contain spaces.) I like to add the title separated
-   by underscores or in CamelCase (e.g., "the\_tyger" or "TheTyger") so that I
-   can easily search for all the cards of a given song later on.
+   Anki and cannot themselves contain spaces.) I like to add the title
+   separated by underscores or in CamelCase (e.g., "the\_tyger" or "TheTyger")
+   so that I can easily search for all the cards of a given song later on.
 
 After entering this information, LPCG will generate the cards, write them to a
 temporary file, and pull up Anki's import screen. Proceed to the next section.
@@ -179,16 +173,16 @@ from top to bottom:
 - *Fields separated by*: Tab should be selected automatically, but if it's not,
   do so.
 - *Duplicate handling*: As long as you are pretty sure that no other song has
-  the same two lines anywhere in the song (which is unlikely), select *Update
-  existing notes when first field matches*.
-- *Allow HTML in fields*: Make sure this is selected or the line breaks will not
-  import correctly.
+  the same two lines anywhere in the song (which is probably unlikely), select
+  *Update existing notes when first field matches*.
+- *Allow HTML in fields*: Make sure this is selected or the line breaks will
+  not import correctly.
 - *Field mapping*: Field 1 should be mapped to Context and field 2 to Line.
 
 After checking that the settings are correct, click the *Import* button to the
-right of the field mapping settings (*not* the *Close* button in the
-lower-right). Anki should display "Importing complete" and a count of the number
-of cards that were generated.
+right of the field mapping settings (not the *Close* button in the
+lower-right). Anki should display "Importing complete" and a count of the
+number of cards that were generated.
 
 Updating LPCG Cards
 ===================
