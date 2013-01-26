@@ -17,15 +17,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Contact Me:
-# soren@sorenbjornstad.com
+# anki@sorenbjornstad.com
 # http://www.thetechnicalgeekery.com/anki
 
 ###############################################################################
 # If Anki is installed in a nonstandard location on your system, set this to
 # the path to the executable that needs to be run to start Anki.
 
-custom_anki_location = "/home/soren/code/anki/unstable/anki/runanki"
-#custom_anki_location = ''
+custom_anki_location = ''
 
 ###############################################################################
 

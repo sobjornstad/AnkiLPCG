@@ -88,6 +88,37 @@ Once you've gotten Python installed (if necessary), you're ready to run LPCG:
 just double-click on lpcg.py to get started. No installation of LPCG itself is
 required, so simply put the file in a convenient place to run when desired.
 
+Setting a Custom Anki Location
+==============================
+
+LPCG assumes that your Anki executable is stored in one of these locations:
+- 'C:\Program Files\Anki\anki.exe' (or Program Files (x86)) on Windows
+- '/Applications/Anki.app/Contents/MacOS/Anki' on Mac OS X
+- 'anki' (on the system path) on Linux
+
+If it isn't, you'll receive a warning on starting LPCG telling you to define a
+custom Anki location. You don't *have* to do this, but if you don't you'll have
+to manually import a temporary file in an awkward location every time you
+generate cards. Here's how to fix it:
+
+1. Find a shortcut to Anki, open up the Properties for it, and determine the
+   full path to the target. The specifics depend on your operating system. The
+   path should be fairly long and contain slashes (/) or backslashes (\\).
+2. Open the lpcg.py file in a text editor such as Notepad or TextEdit. You can
+   either start the text editor first and use File -> Open to open the file or
+   try right-clicking on the file and looking for an option such as "Edit" or
+   "Open With."
+3. Go to roughly line 25, inside the box made of hashes. You will see a line
+   that looks like *custom\_anki\_location = ''*. Type or paste the path you got
+   in step 1 between the single quotation marks.
+4. If your path contains *backslashes*, \\, usually only if you're using
+   Windows, change every backslash to two backslashes in a row (\\\\).
+5. Save the file and restart LPCG. The warning message should be gone now.
+
+If you believe that you installed Anki in a standard location and LPCG should
+search that location by default, please contact me (see the last section on this
+page) and provide the path and I will add it.
+
 Running the Script
 ==================
 
@@ -157,3 +188,10 @@ you'll probably know it fairly well. If you would like to practice fluency, you
 can copy and paste larger chunks such as whole stanzas into new Anki cards
 manually, or even add a card that asks you to try saying/singing the whole
 thing.
+
+Contact Me
+==========
+
+If you have questions, comments, suggestions, or improvements, you may post
+something on the GitHub issue tracker, submit a pull request, or email me at
+anki@sorenbjornstad.com.
