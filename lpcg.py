@@ -2,6 +2,7 @@
 
 # Anki Lyrics/Poetry Cloze Generator
 # Copyright 2013 Soren Bjornstad.
+# Version 0.9.0
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,7 +36,7 @@ from sys import argv
 from subprocess import call
 
 def print_help():
-    print "    Lyrics/Poetry Cloze Generator"
+    print "    Lyrics/Poetry Cloze Generator v0.9.0"
     print "    Copyright 2013 Soren Bjornstad; see COPYING for details.\n"
     print "    Input File: Drag and drop the input file you wish to use " \
               "onto this window."
