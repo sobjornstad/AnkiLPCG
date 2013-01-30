@@ -2,7 +2,7 @@
 
 # Anki Lyrics/Poetry Cloze Generator
 # Copyright 2013 Soren Bjornstad.
-# Version 0.9.0
+# Version 0.9.1
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,10 +46,12 @@ def print_help():
               "card."
     print "\n    For further help, see the README.\n"
 
-def get_data(msg):
+def get_data(msg, required=True):
     data = ''
     while not data:
         data = raw_input("%s: " % msg)
+        if not required:
+            break
 
     return data.strip()
 
@@ -78,7 +80,6 @@ def locate_anki_executable():
         anki_location = 'anki'
 
     elif sys.platform.startswith('darwin'):
-        # from 'so good-looking it hurts' on Anki forum; not tested personally
         anki_location = '/Applications/Anki.app/Contents/MacOS/Anki'
 
 
@@ -105,7 +106,7 @@ def main():
     # Ask user for file and song names.
     input_file = get_data("Input File")
     title = get_data("Title")
-    tags = get_data("Tags")
+    tags = get_data("Tags (optional)", required=False)
 
     # Open input and output files.
     lyrics_file = open(input_file)
