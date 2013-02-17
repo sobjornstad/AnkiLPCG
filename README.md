@@ -149,8 +149,10 @@ and provide the path and I will add it.
 Running the Script
 ==================
 
-On Windows, double-click on the file. On Linux, run './lpcg.py'. On Mac OS X, I
-believe you can double-click as well, but I'm not certain.
+On Windows, double-click on the file. On Linux and Mac OS X, open a terminal,
+change to the directory you have LPCG stored in, and run './lpcg.py'. (On Mac
+OS X, depending on your settings, you may or may not be able to double-click
+instead. The terminal method should always work.)
 
 When you run LPCG, you will be shown a copyright notice and a brief help screen.
 Here's what information you need to give it:
@@ -197,10 +199,11 @@ number of cards that were generated.
 Updating LPCG Cards
 ===================
 
-If you want to make changes to your cards later on (for instance, to correct a
-typo or add some part of the song or poem that you forgot), the easiest way is
-to change the original text file, then import it again, making sure to select
-the "update" option in the import dialog box (see *Importing into Anki*, above).
+Unfortunately, it is not too easy to update cards, as the context is set as a
+unique field by Anki and will add duplicate cards when you reimport. Your best
+bet is to go ahead and run LPCG again, import into Anki using the "update"
+option, and then delete the old cards. In the future I may look into using a
+unique ID field to avoid this problem.
 
 Studying
 ========
