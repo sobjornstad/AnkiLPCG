@@ -81,9 +81,9 @@ This allows you to know that the next line is the start of the next stanza
 while still looking good and not producing useless cards.
 
 I haven't run into any encoding issues myself; I've saved my files in ASCII or
-UTF-8. LPCG is *not* written to process text in Unicode at the moment, so if
-you need non-Latin characters you may be in trouble. If you need this, please
-contact me and I'll see what I can do about adding it.
+UTF-8. As a test, I tried putting some Japanese characters in a text file and
+LPCG processed it correctly, so I think it should deal with any Unicode
+characters properly. Please let me know if something doesn't work.
 
 Installing the Note Type
 ========================
