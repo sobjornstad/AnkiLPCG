@@ -101,6 +101,7 @@ Installing the Script
 =====================
 
 Mac OS X and nearly all Linux distributions come with Python preinstalled.
+You need Python version 2.7.x to run LPCG; 3.0 does *not* work.
 
 On Windows, you can check if you have Python by attempting to start LPCG by
 double-clicking on it.  If Windows tells you it doesn't recognize the file type,
