@@ -95,6 +95,16 @@ def locate_anki_executable():
               "\n*****\n"
         return None
 
+def quotation_strip(string):
+    """Remove any single or double quotation marks surrounding string."""
+
+    while True:
+        if string[0] == '"' or string[0] == "'":
+            string = string[1:]
+        elif string[-1] == '"' or string[-1] == "'":
+            string = string[:-1]
+        else:
+            return
 
 def open_anki(ankipath, anki_file):
     call([ankipath, anki_file.name])
@@ -104,7 +114,7 @@ def main():
     print_help()
 
     # Ask user for file and song names.
-    input_file = get_data("Input File")
+    input_file = quotation_strip(get_data("Input File"))
     title = get_data("Title")
     tags = get_data("Tags (optional)", required=False)
 
