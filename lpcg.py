@@ -104,7 +104,7 @@ def quotation_strip(string):
         elif string[-1] == '"' or string[-1] == "'":
             string = string[:-1]
         else:
-            return
+            return string
 
 def open_anki(ankipath, anki_file):
     call([ankipath, anki_file.name])
