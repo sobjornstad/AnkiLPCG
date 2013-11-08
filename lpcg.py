@@ -2,7 +2,7 @@
 
 # Anki Lyrics/Poetry Cloze Generator
 # Copyright 2013 Soren Bjornstad.
-# Version 0.9.2
+# Version 0.9.3
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
