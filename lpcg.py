@@ -2,7 +2,7 @@
 
 # Anki Lyrics/Poetry Cloze Generator
 # Copyright 2012-2013 Soren Bjornstad.
-# Version 0.9.3
+# Version 0.9.4
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 # If Anki is installed in a nonstandard location on your system, set this to
 # the path to the executable that needs to be run to start Anki.
 
-custom_anki_location = '/home/soren/code/anki/runanki'
+custom_anki_location = ''
 
 ###############################################################################
 
@@ -36,7 +36,7 @@ import traceback
 from subprocess import call
 
 def print_help():
-    print "    Lyrics/Poetry Cloze Generator v0.9.3"
+    print "    Lyrics/Poetry Cloze Generator v0.9.4"
     print "    Copyright 2012-2013 Soren Bjornstad; see COPYING for details.\n"
     print "    Input File: Drag and drop the input file you wish to use onto this window."
     print "    Title:      This will be used to prompt you for the first line of the text."
