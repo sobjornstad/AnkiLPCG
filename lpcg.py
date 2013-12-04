@@ -29,9 +29,10 @@ custom_anki_location = '/home/soren/code/anki/runanki'
 
 ###############################################################################
 
-import tempfile
 import os
 import sys
+import tempfile
+import traceback
 from subprocess import call
 
 def print_help():
@@ -107,14 +108,33 @@ def main():
     ankipath = locate_anki_executable()
     print_help()
 
-    # Ask user for file and song names.
-    input_file = quotation_strip(get_data("Input File"))
+    # Open files.
+    try:
+        anki_file = tempfile.NamedTemporaryFile('w', delete=False)
+        5/0
+    except:
+        print "*****"
+        print "Could not create a temporary file. Please ensure:"
+        print "- you are using Python 2.7.3 or above"
+        print "- the permissions on your system's temporary folder are correct."
+        print "\nThe original error follows:"
+        traceback.print_exc()
+        print "*****"
+        exit()
+
+    while True:
+        try:
+            input_file = quotation_strip(get_data("Input File"))
+            lyrics_file = open(input_file)
+        except IOError:
+            print "Could not read that file. Are you sure it exists?"
+            continue
+        else:
+            break
+
+    # Get metadata.
     title = get_data("Title")
     tags = get_data("Tags (optional)", required=False)
-
-    # Open input and output files.
-    lyrics_file = open(input_file)
-    anki_file = tempfile.NamedTemporaryFile('w', delete=False)
 
     # Find total lines in file for the loop.
     total_lines = len(lyrics_file.readlines())
