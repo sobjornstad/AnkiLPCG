@@ -25,7 +25,7 @@
 # If Anki is installed in a nonstandard location on your system, set this to
 # the path to the executable that needs to be run to start Anki.
 
-custom_anki_location = ''
+custom_anki_location = '/home/soren/code/anki/runanki'
 
 ###############################################################################
 
@@ -157,11 +157,15 @@ def main():
     # Import file to Anki, if a location has been found.
     if ankipath:
         open_anki(ankipath, anki_file)
+        print "\n* Anki is importing your file. *"
+        print "If Anki does not appear, please start Anki and open your profile if"
+        print "necessary, then try running LPCG again."
     else:
         print "\nDone! Now import the file %s into Anki.\n" % anki_file.name
         print "To avoid having to do this manually in the future, consider setting the path"
         print "to Anki in the script file, as described in the \"Setting a Custom Anki Location\""
         print "section of the README.\n"
-        raw_input("== Press Enter to close the Generator. ==")
+
+    raw_input("\n== Press Enter to close the Generator. ==")
 
 main()
