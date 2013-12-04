@@ -111,7 +111,6 @@ def main():
     # Open files.
     try:
         anki_file = tempfile.NamedTemporaryFile('w', delete=False)
-        5/0
     except:
         print "*****"
         print "Could not create a temporary file. Please ensure:"
@@ -188,4 +187,5 @@ def main():
 
     raw_input("\n== Press Enter to close the Generator. ==")
 
-main()
+if __name__ == "__main__":
+    main()
