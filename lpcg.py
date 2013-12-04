@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # Anki Lyrics/Poetry Cloze Generator
-# Copyright 2013 Soren Bjornstad.
+# Copyright 2012-2013 Soren Bjornstad.
 # Version 0.9.3
 #
 # This program is free software: you can redistribute it and/or modify
@@ -32,19 +32,15 @@ custom_anki_location = ''
 import tempfile
 import os
 import sys
-from sys import argv
 from subprocess import call
 
 def print_help():
-    print "    Lyrics/Poetry Cloze Generator v0.9.2"
-    print "    Copyright 2013 Soren Bjornstad; see COPYING for details.\n"
-    print "    Input File: Drag and drop the input file you wish to use " \
-              "onto this window."
-    print "    Title:      This will be used to prompt you for the first line " \
-              "of the text."
-    print "    Tags:       This will be fed to Anki as the Tags field of each " \
-              "card."
-    print "\n    For further help, see the README.\n"
+    print "    Lyrics/Poetry Cloze Generator v0.9.3"
+    print "    Copyright 2012-2013 Soren Bjornstad; see COPYING for details.\n"
+    print "    Input File: Drag and drop the input file you wish to use onto this window."
+    print "    Title:      This will be used to prompt you for the first line of the text."
+    print "    Tags:       This will be fed to Anki as the Tags field of each card.\n"
+    print "    For further help, see README.md.\n"
 
 def get_data(msg, required=True):
     data = ''
@@ -86,13 +82,11 @@ def locate_anki_executable():
     if os.path.exists(anki_location):
         return anki_location
     else:
-        print "*****" \
-              "\nWARNING: LPCG could not locate your Anki executable and " \
-              "will not be able to\n         automatically import the " \
-              "generated cloze deletions. To solve this\n         problem, " \
-              "please see the \"Setting a Custom Anki Location\" section in " \
-              "the\n         README." \
-              "\n*****\n"
+        print "*****"
+        print "WARNING: LPCG could not locate your Anki executable and will not be able to"
+        print "automatically import the generated cloze deletions. To solve this problem,"
+        print "please see the \"Setting a Custom Anki Location\" section in the README."
+        print "*****"
         return None
 
 def quotation_strip(string):
@@ -164,10 +158,10 @@ def main():
     if ankipath:
         open_anki(ankipath, anki_file)
     else:
-        print "\nDone! Now import the file %s into Anki. To avoid having to " \
-              "do this manually in the future,\nconsider setting the path " \
-              "to Anki in the script file, as described in the README." \
-              % anki_file.name
+        print "\nDone! Now import the file %s into Anki.\n" % anki_file.name
+        print "To avoid having to do this manually in the future, consider setting the path"
+        print "to Anki in the script file, as described in the \"Setting a Custom Anki Location\""
+        print "section of the README.\n"
         raw_input("== Press Enter to close the Generator. ==")
 
 main()
