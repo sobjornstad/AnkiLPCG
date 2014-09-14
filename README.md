@@ -7,7 +7,7 @@ For more information on Anki, see <http://ankisrs.net>.
 Documentation License
 =====================
 
-Copyright (c) 2013 Soren Bjornstad.
+Copyright (c) 2013-2014 Soren Bjornstad.
 
 Permission is granted to copy, distribute
 and/or modify this document under the terms of the GNU Free Documentation
@@ -21,7 +21,7 @@ Support
 
 If you have any questions which are not answered by this manual, you may either
 email me at anki@sorenbjornstad.com or post on the Anki help forum
-(<https://groups.google.com/forum/?fromgroups=#!forum/ankisrs>). I read the
+(http://anki.tenderapp.com). I read the
 forum daily, as I am employed answering support questions for Anki proper
 there.
 
@@ -87,6 +87,13 @@ UTF-8. As a test, I tried putting some Japanese characters in a text file and
 LPCG processed it correctly, so I think it should deal with any Unicode
 characters properly. Please let me know if something doesn't work.
 
+If you're using TextEdit on a Mac to generate the text file, you should be
+aware that TextEdit saves in RTF (Rich Text Format) mode rather than plain text
+mode by default. RTF files will import successfully into Anki, but there will
+be a bunch of garbage on the cards. You can use the menu option **Format -> Make
+Plain Text** to change to a plain text file.
+
+
 Installing the Note Type
 ========================
 
@@ -106,7 +113,7 @@ You need Python version 2.7.x to run LPCG; 3.0 does *not* work.
 On Windows, you can check if you have Python by attempting to start LPCG by
 double-clicking on it.  If Windows tells you it doesn't recognize the file type,
 you need to install Python. You can download Python from
-<http://python.org/download/releases/2.7.3/>. If you know you have a 64-bit
+<http://python.org/download/releases/2.7.8/>. If you know you have a 64-bit
 operating system, download the Windows X86-64 MSI installer; otherwise, download
 the Windows x86 MSI installer. Installation is straightforward and works just
 like installing any other program.
@@ -153,9 +160,12 @@ Running the Script
 ==================
 
 On Windows, double-click on the file. On Linux and Mac OS X, open a terminal,
-change to the directory you have LPCG stored in, and run './lpcg.py'. (On Mac
-OS X, depending on your settings, you may or may not be able to double-click
-instead. The terminal method should always work.)
+change to the directory you have LPCG stored in, and run './lpcg.py'. If you're
+using OS X and are not familiar with the terminal, you can change the directory
+by command-dragging the folder you want to switch to out of Finder onto a
+terminal window. On Mac OS X, depending on your settings, you may or may not be
+able to double-click instead of using the terminal. The terminal method should
+always work.
 
 When you run LPCG, you will be shown a copyright notice and a brief help screen.
 Here's what information you need to give it:
