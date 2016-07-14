@@ -72,9 +72,10 @@ end of this manual.
 Installation
 ============
 
-LPCG can be installed from [its AnkiWeb page](null). The source is available
-[at GitHub](https://github.com/sobjornstad/AnkiLPCG). LPCG, like Anki, is
-licensed under the [GNU AGPL3](http://www.gnu.org/licenses/agpl.html).
+LPCG can be installed from [its AnkiWeb
+page](https://ankiweb.net/shared/info/2084557901). The source is available [at
+GitHub](https://github.com/sobjornstad/AnkiLPCG). LPCG, like Anki, is licensed
+under the [GNU AGPL3](http://www.gnu.org/licenses/agpl.html).
 
 
 <a id="Use">
