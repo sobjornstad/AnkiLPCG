@@ -1,0 +1,4 @@
+*.un~
+*.pyc
+*.html
+lpcg/import_dialog.py
