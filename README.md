@@ -1,8 +1,8 @@
-Anki Lyrics/Poetry Cloze Generator (LPCG) is an add-on for
+Anki **Lyrics/Poetry Cloze Generator** (LPCG) is an add-on for
 [Anki](http://ankisrs.net) to make it easier to study long passages of verbatim
 text, like poetry or song lyrics.
 
-[insert screenshots here]
+<img style="float: right;" width=400px border="1" src=screenshots/studying.png>
 
 This is LPCG 1.0.0. Versions in the 0.x series were standalone Python scripts
 that had to be installed and run separately from Anki; the add-on approach
@@ -32,6 +32,7 @@ If you have found a bug or wish to suggest an improvement, you can post on the
 issue tracker or submit a pull request [at
 GitHub](https://github.com/sobjornstad/AnkiLPCG).
 
+<img style="float: right;" height=300px border="1" src=screenshots/iphone.png>
 
 <a id="Theory">
 Theory
@@ -83,7 +84,7 @@ Use
 To add a poem to your collection, choose **Tools → Import Lyrics/Poetry**. You
 will see the following window:
 
-[insert image here]
+![The import dialog](screenshots/importing.png)
 
 The options should be fairly self-explanatory. Note that the **Title** field
 will be used to warn you if you already have this poem in your collection, as
