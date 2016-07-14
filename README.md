@@ -8,6 +8,8 @@ This is LPCG 1.0.0. Versions in the 0.x series were standalone Python scripts
 that had to be installed and run separately from Anki; the add-on approach
 taken by 1.0 and above should be much easier to set up and use for most users.
 
+<img style="float: right;" height=300px border="1" src=screenshots/iphone.png>
+
 Contents
 ========
 
@@ -32,7 +34,6 @@ If you have found a bug or wish to suggest an improvement, you can post on the
 issue tracker or submit a pull request [at
 GitHub](https://github.com/sobjornstad/AnkiLPCG).
 
-<img style="float: right;" height=300px border="1" src=screenshots/iphone.png>
 
 <a id="Theory">
 Theory
