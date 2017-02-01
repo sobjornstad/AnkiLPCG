@@ -2,8 +2,8 @@
 
 """
 LPCG - Lyrics/Poetry Cloze Generator
-version 1.0.0
-Copyright (c) 2016 Soren Bjornstad <contact@sorenbjornstad.com>
+version 1.1.0
+Copyright (c) 2016-2017 Soren Bjornstad <contact@sorenbjornstad.com>
 License: GNU AGPL, version 3 or later: <http://www.gnu.org/licenses/agpl.html>
 """
 
@@ -56,6 +56,7 @@ class LPCGDialog(QDialog):
         tags = self.mw.col.tags.canonify(
             self.mw.col.tags.split(self.form.tagsBox.text()))
         text = process_text(self.form.textBox.toPlainText().strip())
+        context_lines = self.form.contextLinesSpin.value()
         if not title.strip():
             showWarning("You must enter a title for this poem.")
             return
@@ -71,7 +72,7 @@ class LPCGDialog(QDialog):
                         '"open file" button to import a text file.')
             return
 
-        notes_generated = self._genNotes(title, tags, text)
+        notes_generated = self._genNotes(title, tags, text, context_lines)
         if notes_generated:
             super(LPCGDialog, self).accept()
             self.mw.reset()
@@ -93,30 +94,29 @@ class LPCGDialog(QDialog):
             text = f.read()
         self.form.textBox.setPlainText(text)
 
-    def _genNotes(self, title, tags, text):
+    def _genNotes(self, title, tags, text, lines_of_context=2):
         """
-        Generate notes from the given title, tags, and poem text. Return the
-        number of notes added.
+        Generate notes from the given title, tags, poem text, and number of
+        lines of context. Return the number of notes added.
         """
-        def newNote(seq, context1, context2, line):
+        def newNote(seq, contexts, line):
             n = Note(self.mw.col, self.mw.col.models.byName(lpcg_models.NAME))
             n.model()['did'] = self.deckChooser.selectedId()
             n.tags = tags
             n['Title'] = title
             n['Sequence'] = unicode(seq)
-            if context2:
-                n['Context'] = "<p>%s</p><p>%s</p>" % (context1, context2)
-            else:
-                n['Context'] = "<p>%s</p>" % context1
+            n['Context'] = ''.join("<p>%s</p>" % i for i in contexts)
             n['Line'] = line
             self.mw.col.addNote(n)
 
-        newNote(1, "[First Line]", "", text[0])
-        newNote(2, "[Beginning]", text[0], text[1])
-        n = None
-        for n, threelines in enumerate(zip(text[:-2], text[1:-1], text[2:]), 3):
-            newNote(n, *threelines)
-        return n
+        newNote(1, ["[First Line]"], text[0])
+        # loop for early lines that can't have all the context
+        for seq in range(2, min(lines_of_context+1, len(text)+1)):
+            newNote(seq, ["[Beginning]"] + text[0:seq-1], text[seq-1])
+        # and for the rest
+        for seq in range(lines_of_context+1, len(text)+1):
+            newNote(seq, text[seq-lines_of_context-1:seq-1], text[seq-1])
+        return seq
 
 
 def process_text(string):
