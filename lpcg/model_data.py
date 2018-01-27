@@ -51,6 +51,7 @@ p {
  text-align: left;
  margin-left: 30px;
  text-indent: -30px;
+ margin-right: 30px;
 }
 
 .cloze {
