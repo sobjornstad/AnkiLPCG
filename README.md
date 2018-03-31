@@ -24,6 +24,7 @@ Contents
   poetry</a>
 
 <a id="Support">
+
 Support
 =======
 
@@ -36,6 +37,7 @@ GitHub](https://github.com/sobjornstad/AnkiLPCG).
 
 
 <a id="Theory">
+
 Theory
 ======
 
@@ -70,6 +72,7 @@ end of this manual.
 
 
 <a id="Installation">
+
 Installation
 ============
 
@@ -80,6 +83,7 @@ under the [GNU AGPL3](http://www.gnu.org/licenses/agpl.html).
 
 
 <a id="Use">
+
 Use
 ===
 
@@ -134,6 +138,7 @@ When you’re done, click **Add notes** to add the poem to your collection.
 
 
 <a id="Editing_LPCG_notes">
+
 Editing LPCG notes
 ==================
 
@@ -145,6 +150,7 @@ notes. Two of the errors will be in the *Context* field and one will be in the
 
 
 <a id="Summary_of_the_LPCG_note_type">
+
 Summary of the LPCG note type
 =============================
 
@@ -178,6 +184,7 @@ at once.
 
 
 <a id="Customization">
+
 Customization
 =============
 
@@ -198,6 +205,7 @@ top.
 
 
 <a id="Appendix_Initial_memorization">
+
 Appendix: Initial memorization
 ==============================
 
