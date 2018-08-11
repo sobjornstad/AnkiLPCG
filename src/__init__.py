@@ -8,6 +8,7 @@ License: GNU AGPL, version 3 or later: <http://www.gnu.org/licenses/agpl.html>
 # pylint: disable=import-error, no-name-in-module
 # pylint: disable=invalid-name
 import codecs
+import itertools
 import re
 
 from PyQt5.QtWidgets import QDialog
@@ -113,27 +114,38 @@ class LPCGDialog(QDialog):
             newNote(seq, text[seq-lines_of_context-1:seq-1], text[seq-1])
         return seq
 
-
 def process_text(string, config):
     """
     Munge raw text from the poem editor into a list of lines that can be
     directly made into notes.
     """
+    def _normalize_blank_lines(text_lines):
+        # remove consecutive lone newlines
+        new_text = []
+        last_line = ""
+        for i in text_lines:
+            if last_line.strip() or i.strip():
+                new_text.append(i)
+            last_line = i
+        # remove lone newlines at beginning and end
+        for i in (0, -1):
+            if not new_text[i].strip():
+                del new_text[i]
+        return new_text
+
     text = string.splitlines()
     # record a level of indentation if appropriate
     text = [re.sub(r'^[ \t]+', r'<indent>', i) for i in text]
-    # remove comments
+    # remove comments and normalize blank lines
     text = [i.strip() for i in text if not i.startswith("#")]
     text = [re.sub(r'\#.*$', '', i) for i in text]
+    text = _normalize_blank_lines(text)
     # add end-of-stanza/poem markers where appropriate
     for i in range(len(text)):
         if i == len(text) - 1:
             text[i] += config['endOfTextMarker']
-            continue
-        if not text[i].strip():
-            # end of stanza or just several consecutive blank lines?
-            if text[i-1].strip():
-                text[i-1] += config['endOfStanzaMarker']
+        elif not text[i+1].strip():
+            text[i] += config['endOfStanzaMarker']
     # entirely remove all blank lines
     text = [i for i in text if i.strip()]
     # replace <indent>s with valid CSS
