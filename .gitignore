@@ -1,4 +1,7 @@
-*.un~
+src/import_dialog.py
+build.zip
+**/.mypy_cache/*
 *.pyc
+__pycache__/*
+*.un~
 *.html
-lpcg/import_dialog.py
