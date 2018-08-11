@@ -1,18 +1,21 @@
 .PHONY: all forms zip clean
 
 all: forms zip
-forms: lpcg/import_dialog.py
+forms: src/import_dialog.py
 zip: build.zip
 
-lpcg/import_dialog.py: designer/import_dialog.ui 
-	pyuic4 $^ > $@
+src/import_dialog.py: designer/import_dialog.ui 
+	pyuic5 $^ > $@
 
-build.zip: lpcg/* LPCG.py
+build.zip: src/*
 	rm -f $@
-	zip -r $@ lpcg/ LPCG.py
+	rm -f src/meta.json
+	rm -rf src/__pycache__
+	( cd src/; zip -r ../$@ * )
 
 clean:
 	rm -f *.pyc
-	rm -f lpcg/*.pyc
-	rm -f lpcg/import_dialog.py
+	rm -f src/*.pyc
+	rm -f src/__pycache__
+	rm -f src/import_dialog.py
 	rm -f build.zip
