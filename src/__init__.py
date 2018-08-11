@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
-
 """
 LPCG - Lyrics/Poetry Cloze Generator
-version 1.1.0
-Copyright (c) 2016-2017 Soren Bjornstad <contact@sorenbjornstad.com>
+version 1.2.0
+Copyright (c) 2016-2018 Soren Bjornstad <contact@sorenbjornstad.com>
 License: GNU AGPL, version 3 or later: <http://www.gnu.org/licenses/agpl.html>
 """
 
@@ -12,19 +10,15 @@ License: GNU AGPL, version 3 or later: <http://www.gnu.org/licenses/agpl.html>
 import codecs
 import re
 
-from PyQt4.QtGui import QDialog
+from PyQt5.QtWidgets import QDialog
 import aqt
 from aqt.qt import QAction
 from aqt.utils import getFile, showWarning, askUser, tooltip
 from anki.hooks import addHook
 from anki.notes import Note
 
-import lpcg.import_dialog as lpcgform
-import lpcg.model_data as lpcg_models
-
-
-END_OF_STANZA = u" ⊗" # U+2297 CIRCLED TIMES
-END_OF_TEXT = u" □"   # U+25A1 WHITE SQUARE
+from . import import_dialog as lpcg_form
+from . import model_data as lpcg_models
 
 
 class LPCGDialog(QDialog):
@@ -41,7 +35,7 @@ class LPCGDialog(QDialog):
         self.mw = mw
 
         QDialog.__init__(self)
-        self.form = lpcgform.Ui_Dialog()
+        self.form = lpcg_form.Ui_Dialog()
         self.form.setupUi(self)
         self.deckChooser = aqt.deckchooser.DeckChooser(
             self.mw, self.form.deckChooser)
@@ -55,7 +49,8 @@ class LPCGDialog(QDialog):
         title = self.form.titleBox.text().strip()
         tags = self.mw.col.tags.canonify(
             self.mw.col.tags.split(self.form.tagsBox.text()))
-        text = process_text(self.form.textBox.toPlainText().strip())
+        text = process_text(self.form.textBox.toPlainText().strip(),
+                            self.mw.addonManager.getConfig(__name__))
         context_lines = self.form.contextLinesSpin.value()
         if not title.strip():
             showWarning("You must enter a title for this poem.")
@@ -90,7 +85,7 @@ class LPCGDialog(QDialog):
         filename = getFile(self, "Import file", None, key="import")
         if not filename: # canceled
             return
-        with codecs.open(filename, 'rt', 'utf-8') as f:
+        with codecs.open(filename, 'r', 'utf-8') as f:
             text = f.read()
         self.form.textBox.setPlainText(text)
 
@@ -104,7 +99,7 @@ class LPCGDialog(QDialog):
             n.model()['did'] = self.deckChooser.selectedId()
             n.tags = tags
             n['Title'] = title
-            n['Sequence'] = unicode(seq)
+            n['Sequence'] = str(seq)
             n['Context'] = ''.join("<p>%s</p>" % i for i in contexts)
             n['Line'] = line
             self.mw.col.addNote(n)
@@ -119,7 +114,7 @@ class LPCGDialog(QDialog):
         return seq
 
 
-def process_text(string):
+def process_text(string, config):
     """
     Munge raw text from the poem editor into a list of lines that can be
     directly made into notes.
@@ -133,12 +128,12 @@ def process_text(string):
     # add end-of-stanza/poem markers where appropriate
     for i in range(len(text)):
         if i == len(text) - 1:
-            text[i] += END_OF_TEXT
+            text[i] += config['endOfTextMarker']
             continue
         if not text[i].strip():
             # end of stanza or just several consecutive blank lines?
             if text[i-1].strip():
-                text[i-1] += END_OF_STANZA
+                text[i-1] += config['endOfStanzaMarker']
     # entirely remove all blank lines
     text = [i for i in text if i.strip()]
     # replace <indent>s with valid CSS
@@ -176,7 +171,3 @@ aqt.mw.form.menuTools.addAction(action)
 action.triggered.connect(open_dialog)
 
 addHook('profileLoaded', ensure_note_type)
-
-# TODO: bug of unclear source with both end markers? only happens sometimes. I
-# added a 'continue' which may fix this but seems unlikely because it's the
-# wrong order.
