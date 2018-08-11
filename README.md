@@ -4,9 +4,10 @@ text, like poetry or song lyrics.
 
 <img style="float: right;" width=400px border="1" src=screenshots/studying.png>
 
-This is LPCG 1.0.0. Versions in the 0.x series were standalone Python scripts
+This is LPCG 1.2.0. Versions in the 0.x series were standalone Python scripts
 that had to be installed and run separately from Anki; the add-on approach
 taken by 1.0 and above should be much easier to set up and use for most users.
+Version 1.2.0 supports Anki 2.1 only; 2.0 is no longer supported.
 
 <img style="float: right;" height=300px border="1" src=screenshots/iphone.png>
 
@@ -198,11 +199,9 @@ If you’d like to customize the width of indents, you can make some changes in 
 * **Manual indent** (when an indent is given in the original poem text): Change
   `margin-left` in the `.indent` class.
 
-If you don’t like the end-of-stanza or end-of-poem markers or they don’t appear
-in the font you’re using, you can edit the add-on (**Tools → Add-ons → LPCG
-→ Edit**) and change the `END_OF_STANZA` and `END_OF_TEXT` strings near the
-top.
-
+The end-of-stanza and end-of-poem markers can be changed in the add-on config
+(choose **Tools → Add-ons**, select LPCG in the list on the left, and click the
+**Config** button).
 
 <a id="Appendix_Initial_memorization">
 
