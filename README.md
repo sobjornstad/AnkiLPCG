@@ -4,10 +4,10 @@ text, like poetry or song lyrics.
 
 <img style="float: right;" width=400px border="1" src=screenshots/studying.png>
 
-This is LPCG 1.2.0. Versions in the 0.x series were standalone Python scripts
+This is LPCG 1.2.1. Versions in the 0.x series were standalone Python scripts
 that had to be installed and run separately from Anki; the add-on approach
 taken by 1.0 and above should be much easier to set up and use for most users.
-Version 1.2.0 supports Anki 2.1 only; 2.0 is no longer supported.
+Version 1.2.0 and above support Anki 2.1 only; 2.0 is no longer supported.
 
 <img style="float: right;" height=300px border="1" src=screenshots/iphone.png>
 
