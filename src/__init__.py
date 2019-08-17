@@ -105,7 +105,17 @@ class LPCGDialog(QDialog):
             n['Line'] = line
             self.mw.col.addNote(n)
 
-        newNote(1, ["[First Line]"], text[0])
+        try:
+            newNote(1, ["[First Line]"], text[0])
+        except KeyError as e:
+            showWarning(
+                "The field {field} was not found on the {name} note type"
+                " in your collection. If you don't have any LPCG notes"
+                " yet, you can delete the note type in Tools -> Manage"
+                " Note Types and restart Anki to fix this problem."
+                " Otherwise, please add the field back to the note type. "
+                .format(field=str(e), name=lpcg_models.NAME))
+            return
         # loop for early lines that can't have all the context
         for seq in range(2, min(lines_of_context+1, len(text)+1)):
             newNote(seq, ["[Beginning]"] + text[0:seq-1], text[seq-1])
