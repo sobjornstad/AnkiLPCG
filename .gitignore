@@ -1,6 +1,6 @@
 src/import_dialog.py
-build.zip
-**/.mypy_cache/*
+build*.zip
+.mypy_cache
 *.pyc
 __pycache__/*
 *.un~
