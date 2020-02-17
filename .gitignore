@@ -5,3 +5,4 @@ build*.zip
 __pycache__/*
 *.un~
 *.html
+/.idea/*
