@@ -21,6 +21,9 @@ class PoemLine:
         note['Sequence'] = str(self.seq)
         note['Context'] = self._format_context(context_lines)
         note['Line'] = self._format_text(recite_lines)
+        prompt = self._get_prompt(recite_lines)
+        if prompt is not None:
+            note['Prompt'] = prompt
 
     def _format_context(self, context_lines: int):
         context_without_self = self._get_context(context_lines)[:-1]
@@ -40,6 +43,15 @@ class PoemLine:
         """
         Return a list of recitation lines, including the current line and
         (lines - 1) of its successors.
+        """
+        raise NotImplementedError
+
+    def _get_prompt(self, configured_recitation_lines: int) -> str:
+        """
+        Return a prompt string to be shown on the question side after the
+        lines of context, or None to use the template default of [...]. This
+        is currently used to let the user know how many lines to recite, but
+        could plausibly be used for other things as well in the future.
         """
         raise NotImplementedError
 
@@ -65,7 +77,7 @@ class Beginning(PoemLine):
         text property is -- the first line we would ever be asked to recite
         would be the following line.
         """
-        raise AssertionError("The successors of the Beginning node are undefined.")
+        raise NotImplementedError
 
     def populate_note(self, note: Note, title: str, tags: List[str],
                       context_lines: int, deck_id: int) -> None:
@@ -96,6 +108,17 @@ class SingleLine(PoemLine):
         else:
             return [self.text] + self.successor._get_text(lines - 1)
 
+    def _get_prompt(self, configured_recitation_lines: int) -> str:
+        # It's important to calculate the lines_to_recite for _this_ instance
+        # instead of just getting the configuration parameter, as if we're at
+        # the end it may be fewer.
+        lines_to_recite = len(self._get_text(configured_recitation_lines))
+        if lines_to_recite == 1:
+            return None
+        else:
+            return f"[...{lines_to_recite}]"
+
+
 
 class GroupedLine(PoemLine):
     def __init__(self, text: List[str], predecessor: 'PoemLine') -> None:
@@ -115,6 +138,11 @@ class GroupedLine(PoemLine):
             return self.text_lines
         else:
             return self.text_lines + self.successor._get_text(lines - 1)
+
+    def _get_prompt(self, configured_recitation_lines: int) -> str:
+        lines_to_recite = len(self._get_text(configured_recitation_lines))
+        lines_occluded = lines_to_recite * len(self.text_lines)
+        return f"[...{lines_occluded}]"
 
 
 def poemlines_from_textlines(text_lines: List[str]) -> List[PoemLine]:
