@@ -129,4 +129,4 @@ action.setText("Import &Lyrics/Poetry")
 aqt.mw.form.menuTools.addAction(action)
 action.triggered.connect(open_dialog)
 
-addHook('profileLoaded', ensure_note_type)
+aqt.gui_hooks.profile_did_open.append(ensure_note_type)
