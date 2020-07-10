@@ -72,7 +72,7 @@ class LPCGDialog(QDialog):
 
         try:
             notes_generated = add_notes(self.mw.col, title, tags, text, did,
-                                        context_lines)
+                                        context_lines, group_lines, recite_lines)
         except KeyError as e:
             showWarning(
                 "The field {field} was not found on the {name} note type"
