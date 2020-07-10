@@ -47,15 +47,8 @@ class LPCGDialog(QDialog):
     def accept(self):
         "On close, create notes from the contents of the poem editor."
         title = self.form.titleBox.text().strip()
-        tags = self.mw.col.tags.split(self.form.tagsBox.text())
-        text = process_text(self.form.textBox.toPlainText().strip(),
-                            self.mw.addonManager.getConfig(__name__))
-        context_lines = self.form.contextLinesSpin.value()
-        recite_lines = self.form.reciteLinesSpin.value()
-        group_lines = self.form.groupLinesSpin.value()
-        did = self.deckChooser.selectedId()
 
-        if not title.strip():
+        if not title:
             showWarning("You must enter a title for this poem.")
             return
         if self.mw.col.findNotes(f'"note:{lpcg_models.NAME}" "Title:{title}"'):
@@ -63,11 +56,19 @@ class LPCGDialog(QDialog):
                         "database. Please check to see if you've already "
                         "added it, or use a different name.")
             return
-        if not text:
+        if not self.form.textBox.toPlainText().strip():
             showWarning("There's nothing to generate cards from! "
                         "Please type a poem in the box, or use the "
-                        '"open file" button to import a text file.')
+                        '"Open File" button to import a text file.')
             return
+
+        tags = self.mw.col.tags.split(self.form.tagsBox.text())
+        text = process_text(self.form.textBox.toPlainText().strip(),
+                            self.mw.addonManager.getConfig(__name__))
+        context_lines = self.form.contextLinesSpin.value()
+        recite_lines = self.form.reciteLinesSpin.value()
+        group_lines = self.form.groupLinesSpin.value()
+        did = self.deckChooser.selectedId()
 
         notes_generated = add_notes(self.mw.col, title, tags, text, did, context_lines)
         if notes_generated:
