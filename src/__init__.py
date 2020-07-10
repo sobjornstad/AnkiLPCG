@@ -168,6 +168,11 @@ def ensure_note_type():
     mm = aqt.mw.col.models
     model = mm.byName(lpcg_models.NAME)
     if model is not None:
+        # Inject night-mode update if not present.
+        if '.nightMode .cloze' not in model['css']:
+            model['css'] += ("\n\n" + lpcg_models.NIGHTMODE_CLOZE)
+        
+        # In any case, don't recreate the note type.
         return
 
     model = mm.new(lpcg_models.NAME)
