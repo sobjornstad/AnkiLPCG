@@ -70,7 +70,19 @@ class LPCGDialog(QDialog):
         group_lines = self.form.groupLinesSpin.value()
         did = self.deckChooser.selectedId()
 
-        notes_generated = add_notes(self.mw.col, title, tags, text, did, context_lines)
+        try:
+            notes_generated = add_notes(self.mw.col, title, tags, text, did,
+                                        context_lines)
+        except KeyError as e:
+            showWarning(
+                "The field {field} was not found on the {name} note type"
+                " in your collection. If you don't have any LPCG notes"
+                " yet, you can delete the note type in Tools -> Manage"
+                " Note Types and restart Anki to fix this problem."
+                " Otherwise, please add the field back to the note type. "
+                .format(field=str(e), name=lpcg_models.NAME))
+            return
+
         if notes_generated:
             super(LPCGDialog, self).accept()
             self.mw.reset()
