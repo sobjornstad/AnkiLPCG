@@ -1,0 +1,18 @@
+
+    @property
+    def num_successors(self) -> int:
+        node = self
+        count = 0
+        while node.successor is not None:
+            node = node.successor
+            count += 1
+        return count
+
+    @property
+    def num_predecessors(self) -> int:
+        node = self
+        count = 0
+        while not isinstance(node.predecessor, Beginning):
+            node = node.predecessor
+            count += 1
+        return count
