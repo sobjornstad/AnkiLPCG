@@ -53,6 +53,8 @@ class LPCGDialog(QDialog):
         text = process_text(self.form.textBox.toPlainText().strip(),
                             self.mw.addonManager.getConfig(__name__))
         context_lines = self.form.contextLinesSpin.value()
+        recite_lines = self.form.reciteLinesSpin.value()
+        group_lines = self.form.groupLinesSpin.value()
         if not title.strip():
             showWarning("You must enter a title for this poem.")
             return
