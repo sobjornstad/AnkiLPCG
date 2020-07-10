@@ -5,6 +5,81 @@ from anki.notes import Note
 
 from . import model_data as lpcg_models
 
+class PoemLine:
+    def populate_note(self, note: Note, title: str, tags: List[str],
+                      context_lines: int, deck_id: int) -> None:
+        """
+        Fill the _note_ with content testing on the current line.
+        """
+        note.model()['did'] = deck_id
+        note.tags = tags
+        note['Title'] = title
+        note['Sequence'] = str(self.seq)
+        note['Context'] = self._format_context(context_lines)
+        note['Line'] = self.text
+
+    def _format_context(self, context_lines: int):
+        context_without_self = self._get_context(context_lines)[:-1]
+        return ''.join("<p>%s</p>" % i for i in context_without_self)
+
+    def _get_context(self, _lines: int) -> List[str]:
+        """
+        Return a list of context lines, including the current line and
+        (lines - 1) of its predecessors.
+        """
+        raise NotImplementedError
+
+
+class Beginning(PoemLine):
+    def __init__(self):
+        self.seq = 0
+        self.text = "[Beginning]"
+
+    def _get_context(self, _lines: int) -> List[str]:
+        return [self.text]
+
+
+class SingleLine(PoemLine):
+    def __init__(self, text: str, predecessor: 'PoemLine') -> None:
+        self.text = text
+        self.predecessor = predecessor
+        self.seq = self.predecessor.seq + 1
+
+    def _get_context(self, lines: int) -> List[str]:
+        if lines == 0:
+            return [self.text]
+        else:
+            return self.predecessor._get_context(lines - 1) + [self.text]
+
+
+class GroupedLine(PoemLine):
+    def __init__(self, text: List[str], predecessor: 'PoemLine') -> None:
+        self.text_lines = text
+        self.predecessor = predecessor
+        self.seq = self.predecessor.seq + 1
+
+    def _get_context(self, lines: int) -> List[str]:
+        if lines == 0:
+            return [self.text]
+        else:
+            return self.predecessor._get_context(lines - 1) + self.text_lines
+
+
+def poemlines_from_textlines(text_lines: List[str]) -> List[PoemLine]:
+    """
+    Given a list of cleansed text lines, create a list of PoemLine objects
+    from it. These are each capable of constructing a correct note testing
+    themselves when the to_note() method is called on them.
+    """
+    beginning = Beginning()
+    lines = []  # does not include beginning, as it's not actually a line
+    pred = beginning
+    for text_line in text_lines:
+        poem_line = SingleLine(text_line, pred)
+        lines.append(poem_line)
+        pred = poem_line
+    return lines
+
 
 def process_text(string: str, config: Dict[str, Any]) -> List[str]:
     """
@@ -46,37 +121,22 @@ def process_text(string: str, config: Dict[str, Any]) -> List[str]:
     return text
 
 
-def add_notes(col: Any, title: str, tags: List[str], text: str, did: int,
+def add_notes(col: Any, title: str, tags: List[str], text: List[str], deck_id: int,
               lines_of_context: int = 2):
     """
     Generate notes from the given title, tags, poem text, and number of
     lines of context. Return the number of notes added.
-    """
-    def newNote(seq: int, contexts: List[str], line: str) -> None:
-        n = Note(col, col.models.byName(lpcg_models.NAME))
-        n.model()['did'] = did
-        n.tags = tags
-        n['Title'] = title
-        n['Sequence'] = str(seq)
-        n['Context'] = ''.join("<p>%s</p>" % i for i in contexts)
-        n['Line'] = line
-        col.addNote(n)
 
-    try:
-        newNote(1, ["[First Line]"], text[0])
-    except KeyError as e:
-        showWarning(
-            "The field {field} was not found on the {name} note type"
-            " in your collection. If you don't have any LPCG notes"
-            " yet, you can delete the note type in Tools -> Manage"
-            " Note Types and restart Anki to fix this problem."
-            " Otherwise, please add the field back to the note type. "
-            .format(field=str(e), name=lpcg_models.NAME))
-        return
-    # loop for early lines that can't have all the context
-    for seq in range(2, min(lines_of_context+1, len(text)+1)):
-        newNote(seq, ["[Beginning]"] + text[0:seq-1], text[seq-1])
-    # and for the rest
-    for seq in range(lines_of_context+1, len(text)+1):
-        newNote(seq, text[seq-lines_of_context-1:seq-1], text[seq-1])
-    return seq
+    Return the number of notes added.
+
+    Raises KeyError if the note type is missing fields, which I've seen
+    happen a couple times when users accidentally edited the note type. The
+    caller should offer an appropriate error message in this case.
+    """
+    added = 0
+    for line in poemlines_from_textlines(text):
+        n = Note(col, col.models.byName(lpcg_models.NAME))
+        line.populate_note(n, title, tags, lines_of_context, deck_id)
+        col.addNote(n)
+        added += 1
+    return added
