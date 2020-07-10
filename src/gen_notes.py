@@ -1,5 +1,6 @@
+from itertools import zip_longest
 import re
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Iterable, List, Optional
 
 from anki.notes import Note
 
@@ -26,13 +27,12 @@ class PoemLine:
             note['Prompt'] = prompt
 
     def _format_context(self, context_lines: int):
-        context_without_self = self._get_context(context_lines)[:-1]
-        return ''.join("<p>%s</p>" % i for i in context_without_self)
+        return ''.join("<p>%s</p>" % i for i in self._get_context(context_lines))
 
     def _format_text(self, recitation_lines: int):
         return ''.join("<p>%s</p>" % i for i in self._get_text(recitation_lines))
 
-    def _get_context(self, _lines: int) -> List[str]:
+    def _get_context(self, _lines: int, _recursing=False) -> List[str]:
         """
         Return a list of context lines, including the current line and
         (lines - 1) of its predecessors.
@@ -67,7 +67,7 @@ class Beginning(PoemLine):
         self.seq = 0
         self.text = "[Beginning]"
 
-    def _get_context(self, _lines: int) -> List[str]:
+    def _get_context(self, _lines: int, _recursing=False) -> List[str]:
         return [self.text]
 
     def _get_text(self, _lines: int) -> List[str]:
@@ -96,11 +96,13 @@ class SingleLine(PoemLine):
         self.predecessor = predecessor
         self.seq = self.predecessor.seq + 1
 
-    def _get_context(self, lines: int) -> List[str]:
+    def _get_context(self, lines: int, recursing=False) -> List[str]:
         if lines == 0:
             return [self.text]
+        elif not recursing:
+            return self.predecessor._get_context(lines - 1, True)
         else:
-            return self.predecessor._get_context(lines - 1) + [self.text]
+            return self.predecessor._get_context(lines - 1, True) + [self.text]
 
     def _get_text(self, lines: int) -> List[str]:
         if lines == 1 or self.successor is None:
@@ -119,19 +121,36 @@ class SingleLine(PoemLine):
             return f"[...{lines_to_recite}]"
 
 
-
 class GroupedLine(PoemLine):
+    r"""
+    A virtual "line" in a poem that has grouping set, so that multiple short
+    lines can be treated as one line by LPCG. It consists of multiple text lines.
+
+    The difference between grouped lines and ordinary lines with double the
+    context and recitation values is that there is no overlapping. So this with
+    default context and recitation values and a group of 2 yields only 3 notes,
+    whereas a context of 4 and recitation of 2 would result in 6 notes:
+
+        /A
+        \B
+        /C
+        \D
+        /E
+        \F
+    """
     def __init__(self, text: List[str], predecessor: 'PoemLine') -> None:
         super().__init__()
         self.text_lines = text
         self.predecessor = predecessor
         self.seq = self.predecessor.seq + 1
 
-    def _get_context(self, lines: int) -> List[str]:
+    def _get_context(self, lines: int, recursing=False) -> List[str]:
         if lines == 0:
-            return [self.text]
+            return self.text_lines
+        elif not recursing:
+            return self.predecessor._get_context(lines - 1, True)
         else:
-            return self.predecessor._get_context(lines - 1) + self.text_lines
+            return self.predecessor._get_context(lines - 1, True) + self.text_lines
 
     def _get_text(self, lines: int) -> List[str]:
         if lines == 1 or self.successor is None:
@@ -141,11 +160,22 @@ class GroupedLine(PoemLine):
 
     def _get_prompt(self, configured_recitation_lines: int) -> str:
         lines_to_recite = len(self._get_text(configured_recitation_lines))
-        lines_occluded = lines_to_recite * len(self.text_lines)
-        return f"[...{lines_occluded}]"
+        if lines_to_recite == 1:
+            return None
+        else:
+            return f"[...{lines_to_recite}]"
 
 
-def poemlines_from_textlines(text_lines: List[str]) -> List[PoemLine]:
+def groups_of_n(iterable: Iterable, n: int) -> Iterable:
+    """
+    s -> (s0,s1,s2,...sn-1), (sn,sn+1,sn+2,...s2n-1), (s2n,s2n+1,s2n+2,...s3n-1), ...
+
+    Credit: https://stackoverflow.com/questions/5389507/iterating-over-every-two-elements-in-a-list
+    """
+    return zip_longest(*[iter(iterable)]*n)
+
+
+def poemlines_from_textlines(text_lines: List[str], group_lines: int) -> List[PoemLine]:
     """
     Given a list of cleansed text lines, create a list of PoemLine objects
     from it. These are each capable of constructing a correct note testing
@@ -154,11 +184,19 @@ def poemlines_from_textlines(text_lines: List[str]) -> List[PoemLine]:
     beginning = Beginning()
     lines = []  # does not include beginning, as it's not actually a line
     pred = beginning
-    for text_line in text_lines:
-        poem_line = SingleLine(text_line, pred)
-        lines.append(poem_line)
-        pred.successor = poem_line
-        pred = poem_line
+
+    if group_lines == 1:
+        for text_line in text_lines:
+            poem_line = SingleLine(text_line, pred)
+            lines.append(poem_line)
+            pred.successor = poem_line
+            pred = poem_line
+    else:
+        for line_set in groups_of_n(text_lines, group_lines):
+            poem_line = GroupedLine([i for i in line_set if i is not None], pred)
+            lines.append(poem_line)
+            pred.successor = poem_line
+            pred = poem_line
     return lines
 
 
@@ -215,7 +253,7 @@ def add_notes(col: Any, title: str, tags: List[str], text: List[str], deck_id: i
     caller should offer an appropriate error message in this case.
     """
     added = 0
-    for line in poemlines_from_textlines(text):
+    for line in poemlines_from_textlines(text, group_lines):
         n = Note(col, col.models.byName(lpcg_models.NAME))
         line.populate_note(n, title, tags, context_lines, recite_lines, deck_id)
         col.addNote(n)
