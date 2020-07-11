@@ -10,6 +10,7 @@ class PoemLine:
     def __init__(self) -> None:
         self.predecessor = None
         self.successor = None
+        self.seq = -1
 
     def populate_note(self, note: Note, title: str, tags: List[str],
                       context_lines: int, recite_lines: int, deck_id: int) -> None:

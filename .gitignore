@@ -1,7 +1,14 @@
+# ide
+.vscode/
+
+# cache
+.mypy_cache/
+__pycache__/
+venv/
+
+# build outputs
 src/import_dialog.py
 build*.zip
-.mypy_cache
 *.pyc
-__pycache__/*
 *.un~
 *.html
