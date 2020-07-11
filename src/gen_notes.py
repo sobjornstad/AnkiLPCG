@@ -1,13 +1,17 @@
 from itertools import zip_longest
 import re
-from typing import Any, Callable, Dict, Iterable, List, Optional
+from typing import Any, Callable, Dict, Iterable, List, Optional, TYPE_CHECKING
 
 from . import model_data as lpcg_models
 
+if TYPE_CHECKING:
+    from anki.notes import Note
+
+
 class PoemLine:
     def __init__(self) -> None:
-        self.predecessor = None
-        self.successor = None
+        self.predecessor = self  # so it's the right type...
+        self.successor: Optional['PoemLine'] = None
         self.seq = -1
 
     def populate_note(self, note: 'Note', title: str, tags: List[str],
@@ -15,7 +19,7 @@ class PoemLine:
         """
         Fill the _note_ with content testing on the current line.
         """
-        note.model()['did'] = deck_id
+        note.model()['did'] = deck_id  # type: ignore
         note.tags = tags
         note['Title'] = title
         note['Sequence'] = str(self.seq)
@@ -45,7 +49,7 @@ class PoemLine:
         """
         raise NotImplementedError
 
-    def _get_prompt(self, configured_recitation_lines: int) -> str:
+    def _get_prompt(self, configured_recitation_lines: int) -> Optional[str]:
         """
         Return a prompt string to be shown on the question side after the
         lines of context, or None to use the template default of [...]. This
@@ -79,7 +83,7 @@ class Beginning(PoemLine):
         raise NotImplementedError
 
     def populate_note(self, note: 'Note', title: str, tags: List[str],
-                      context_lines: int, deck_id: int) -> None:
+                      context_lines: int, recite_lines: int, deck_id: int) -> None:
         raise AssertionError("The Beginning node cannot be used to populate a note.")
 
 
@@ -89,7 +93,7 @@ class SingleLine(PoemLine):
     predecessor (possibly the Beginning node, but never None), and if it's
     not the last line of the poem, a successor.
     """
-    def __init__(self, text: str, predecessor: Optional['PoemLine']) -> None:
+    def __init__(self, text: str, predecessor: 'PoemLine') -> None:
         super().__init__()
         self.text = text
         self.predecessor = predecessor
@@ -109,7 +113,7 @@ class SingleLine(PoemLine):
         else:
             return [self.text] + self.successor._get_text(lines - 1)
 
-    def _get_prompt(self, configured_recitation_lines: int) -> str:
+    def _get_prompt(self, configured_recitation_lines: int) -> Optional[str]:
         # It's important to calculate the lines_to_recite for _this_ instance
         # instead of just getting the configuration parameter, as if we're at
         # the end it may be fewer.
@@ -157,7 +161,7 @@ class GroupedLine(PoemLine):
         else:
             return self.text_lines + self.successor._get_text(lines - 1)
 
-    def _get_prompt(self, configured_recitation_lines: int) -> str:
+    def _get_prompt(self, configured_recitation_lines: int) -> Optional[str]:
         lines_to_recite = len(self._get_text(configured_recitation_lines))
         if lines_to_recite == 1:
             return None
@@ -181,8 +185,9 @@ def poemlines_from_textlines(text_lines: List[str], group_lines: int) -> List[Po
     themselves when the to_note() method is called on them.
     """
     beginning = Beginning()
-    lines = []  # does not include beginning, as it's not actually a line
-    pred = beginning
+    lines: List[PoemLine] = []  # does not include beginning, as it's not actually a line
+    pred: PoemLine = beginning
+    poem_line: PoemLine
 
     if group_lines == 1:
         for text_line in text_lines:

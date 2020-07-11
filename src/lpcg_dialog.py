@@ -4,7 +4,7 @@ import codecs
 from PyQt5.QtWidgets import QDialog
 
 import aqt
-from aqt.qt import QAction
+from aqt.qt import QAction  # type: ignore
 from aqt.utils import getFile, showWarning, askUser, tooltip
 from anki.notes import Note
 

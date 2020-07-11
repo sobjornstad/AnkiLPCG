@@ -12,7 +12,7 @@ if 'pytest' not in sys.modules:
     # pylint: disable=import-error, no-name-in-module
     # pylint: disable=invalid-name
     import aqt
-    from aqt.qt import QAction
+    from aqt.qt import QAction  # type: ignore
 
     from . import model_data as lpcg_models
     from .lpcg_dialog import LPCGDialog
@@ -48,9 +48,10 @@ if 'pytest' not in sys.modules:
         dialog = LPCGDialog(aqt.mw)
         dialog.exec_()
 
-    action = QAction(aqt.mw)
-    action.setText("Import &Lyrics/Poetry")
-    aqt.mw.form.menuTools.addAction(action)
-    action.triggered.connect(open_dialog)
+    if aqt.mw is not None:
+        action = QAction(aqt.mw)
+        action.setText("Import &Lyrics/Poetry")
+        aqt.mw.form.menuTools.addAction(action)
+        action.triggered.connect(open_dialog)
 
-    aqt.gui_hooks.profile_did_open.append(ensure_note_type)
+        aqt.gui_hooks.profile_did_open.append(ensure_note_type)
