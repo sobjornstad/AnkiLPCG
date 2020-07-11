@@ -204,7 +204,7 @@ def poemlines_from_textlines(text_lines: List[str], group_lines: int) -> List[Po
     return lines
 
 
-def process_text(string: str, config: Dict[str, Any]) -> List[str]:
+def cleanse_text(string: str, config: Dict[str, Any]) -> List[str]:
     """
     Munge raw text from the poem editor into a list of lines that can be
     directly made into notes.
@@ -228,7 +228,7 @@ def process_text(string: str, config: Dict[str, Any]) -> List[str]:
     text = [re.sub(r'^[ \t]+', r'<indent>', i) for i in text]
     # remove comments and normalize blank lines
     text = [i.strip() for i in text if not i.startswith("#")]
-    text = [re.sub(r'\#.*$', '', i) for i in text]
+    text = [re.sub(r'\s*\#.*$', '', i) for i in text]
     text = _normalize_blank_lines(text)
     # add end-of-stanza/poem markers where appropriate
     for i in range(len(text)):
