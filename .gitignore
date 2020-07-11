@@ -3,6 +3,7 @@
 
 # cache
 .mypy_cache/
+.pytest_cache/
 __pycache__/
 venv/
 
@@ -14,3 +15,4 @@ build*.zip
 *.html
 .coverage
 htmlcov/
+docs/_build

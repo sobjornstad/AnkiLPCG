@@ -1,6 +1,8 @@
-.PHONY: all forms zip clean
+.PHONY: all docs forms zip clean
 
-all: forms zip
+all: docs forms zip
+docs:
+	$(MAKE) -C docs html
 forms: src/import_dialog.py
 zip: build.zip
 
@@ -14,6 +16,7 @@ build.zip: src/*
 	( cd src/; zip -r ../$@ * )
 
 clean:
+	make -C docs clean
 	rm -f *.pyc
 	rm -f src/*.pyc
 	rm -f src/__pycache__
