@@ -2,6 +2,8 @@ import codecs
 
 # pylint: disable=no-name-in-module
 from PyQt5.QtWidgets import QDialog
+from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtCore import QUrl
 
 import aqt
 from aqt.qt import QAction  # type: ignore
@@ -35,6 +37,7 @@ class LPCGDialog(QDialog):
         self.form.addCardsButton.clicked.connect(self.accept)
         self.form.cancelButton.clicked.connect(self.reject)
         self.form.openFileButton.clicked.connect(self.onOpenFile)
+        self.form.helpButton.clicked.connect(self.onHelp)
 
     def accept(self):
         "On close, create notes from the contents of the poem editor."
@@ -95,3 +98,10 @@ class LPCGDialog(QDialog):
         with codecs.open(filename, 'r', 'utf-8') as f:
             text = f.read()
         self.form.textBox.setPlainText(text)
+
+    def onHelp(self):
+        """
+        Open the documentation on importing files in a browser.
+        """
+        doc_url = "https://ankilpcg.readthedocs.io/en/latest/importing.html"
+        QDesktopServices.openUrl(QUrl(doc_url))
