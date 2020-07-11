@@ -277,7 +277,7 @@ def ensure_note_type() -> None:
             aqt.mw.col.set_config('lpcg_model_version', new_version)
             showInfo("Your LPCG note type was upgraded successfully. "
                     "Please take a moment to ensure your LPCG cards "
-                    "are still displaying as expected so you can restore from a backup"
+                    "are still displaying as expected so you can restore from a backup "
                     "in the event something is not working correctly.")
         return
 
