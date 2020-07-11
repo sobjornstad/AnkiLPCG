@@ -12,3 +12,5 @@ build*.zip
 *.pyc
 *.un~
 *.html
+.coverage
+htmlcov/
