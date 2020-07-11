@@ -254,26 +254,26 @@ def ensure_note_type() -> None:
     Create or update the LPCG note type as needed.
     """
     assert aqt.mw is not None, "Tried to use models before Anki is initialized!"
-    conf = aqt.mw.addonManager.getConfig(__name__)
-    assert conf is not None, "Received no configuration from add-on manager!"
-    current_version = conf['systemConfigDoNotChange']['noteTypeVersion']
     mod = LpcgOne
 
     if not mod.in_collection():
         model_data, new_version = mod.to_model()
         aqt.mw.col.models.add(model_data)
-        conf['systemConfigDoNotChange']['noteTypeVersion'] = new_version
-    elif mod.can_upgrade(current_version):
+        aqt.mw.col.set_config('lpcg_model_version', new_version)
+        return
+
+    # "none": the "version number" pre-versioning
+    current_version = aqt.mw.col.get_config('lpcg_model_version', default="none")
+    if mod.can_upgrade(current_version):
         new_version = mod.upgrade_from(current_version)
-        conf['systemConfigDoNotChange']['noteTypeVersion'] = new_version
-        aqt.mw.addonManager.writeConfig(__name__, conf)
+        aqt.mw.col.set_config('lpcg_model_version', new_version)
         showInfo("Your LPCG note type was automatically upgraded. "
                 "Please take a moment to ensure your LPCG cards "
                 "are still displaying as expected so you can restore from a backup"
                 "in the event something is not working correctly.")
+        return
 
-    assert mod.is_at_version(conf['systemConfigDoNotChange']['noteTypeVersion']), \
+    assert mod.is_at_version(aqt.mw.col.get_config('lpcg_model_version')), \
         "Your LPCG model is out of date, but I couldn't find a valid upgrade path. " \
         "You are likely to encounter issues. " \
         "Please contact the developer for assistance resolving this problem."
-
