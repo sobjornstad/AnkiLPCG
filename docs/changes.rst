@@ -20,6 +20,8 @@ LPCG 1.3.0
 * Added some automated regression testing.
 * Add a *Help* button to the import dialog leading to the documentation.
 * Under-the-hood refactorings and updates to newer features offered by Anki.
+* Refresh the documentation and move to Read the Docs
+  for a nice multi-page view instead of relying on GitHub's Markdown rendering.
 
 
 LPCG 1.2.1
