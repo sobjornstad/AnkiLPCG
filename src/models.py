@@ -29,7 +29,7 @@ from typing import Callable, Dict, Iterable, List, Optional, Tuple, Type
 import sys
 
 import aqt
-from aqt.utils import showInfo
+from aqt.utils import askUser, showInfo
 from anki.consts import MODEL_CLOZE
 from anki.models import Template as AnkiTemplate
 from anki.models import NoteType as AnkiModel
@@ -145,6 +145,11 @@ class ModelData(ABC):
 
 
 def upgrade_onethreeoh(mod):
+    "Upgrade LPCG model from unversioned to version 1.3.0."
+    mm = aqt.mw.col.models
+    field = mm.newField("Prompt")
+    mm.addField(mod, field)
+
     if '.nightMode .cloze' not in mod['css']:
         mod['css'] += "\n\n"
         mod['css'] += dedent("""
@@ -168,10 +173,6 @@ def upgrade_onethreeoh(mod):
         '<span class="cloze">{{Line}}</span>',
         '<div class="cloze">{{Line}}</div>'
     )
-
-    mm = aqt.mw.col.models
-    field = mm.newField("Prompt")
-    mm.addField(mod, field)
 
 
 class LpcgOne(ModelData):
@@ -266,12 +267,18 @@ def ensure_note_type() -> None:
     # "none": the "version number" pre-versioning
     current_version = aqt.mw.col.get_config('lpcg_model_version', default="none")
     if mod.can_upgrade(current_version):
-        new_version = mod.upgrade_from(current_version)
-        aqt.mw.col.set_config('lpcg_model_version', new_version)
-        showInfo("Your LPCG note type was automatically upgraded. "
-                "Please take a moment to ensure your LPCG cards "
-                "are still displaying as expected so you can restore from a backup"
-                "in the event something is not working correctly.")
+        r = askUser("In order to import new notes in this version of LPCG, "
+                    "your LPCG note type needs to be upgraded. "
+                    "This may require a full sync of your collection upon completion. "
+                    "Would you like to upgrade the note type now? "
+                    "If you say no, you will be asked again next time you start Anki.")
+        if r:
+            new_version = mod.upgrade_from(current_version)
+            aqt.mw.col.set_config('lpcg_model_version', new_version)
+            showInfo("Your LPCG note type was upgraded successfully. "
+                    "Please take a moment to ensure your LPCG cards "
+                    "are still displaying as expected so you can restore from a backup"
+                    "in the event something is not working correctly.")
         return
 
     assert mod.is_at_version(aqt.mw.col.get_config('lpcg_model_version')), \
