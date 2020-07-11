@@ -12,7 +12,7 @@ from anki.notes import Note
 
 from . import import_dialog as lpcg_form
 from .gen_notes import add_notes, cleanse_text
-from . import model_data as lpcg_models
+from . import models
 
 
 class LPCGDialog(QDialog):
@@ -24,7 +24,6 @@ class LPCGDialog(QDialog):
     front of lines). LPCG then processes it into notes with two lines of
     context and adds them to the user's collection.
     """
-
     def __init__(self, mw):
         self.mw = mw
 
@@ -46,7 +45,7 @@ class LPCGDialog(QDialog):
         if not title:
             showWarning("You must enter a title for this poem.")
             return
-        if self.mw.col.findNotes(f'"note:{lpcg_models.NAME}" "Title:{title}"'):
+        if self.mw.col.findNotes(f'"note:{models.LpcgOne.name}" "Title:{title}"'):  # pylint: disable=no-member
             showWarning("You already have a poem by that title in your "
                         "database. Please check to see if you've already "
                         "added it, or use a different name.")
@@ -75,7 +74,7 @@ class LPCGDialog(QDialog):
                 " yet, you can delete the note type in Tools -> Manage"
                 " Note Types and restart Anki to fix this problem."
                 " Otherwise, please add the field back to the note type. "
-                .format(field=str(e), name=lpcg_models.NAME))
+                .format(field=str(e), name=models.LpcgOne.name))  # pylint: disable=no-member
             return
 
         if notes_generated:
