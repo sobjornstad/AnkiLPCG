@@ -18,6 +18,7 @@ LPCG 1.3.0
 * Invert color of cloze deletions in night mode,
   as the default color is unnecessarily difficult to read on many screens.
 * Added some automated regression testing.
+* Add a *Help* button to the import dialog leading to the documentation.
 * Under-the-hood refactorings and updates to newer features offered by Anki.
 
 
