@@ -12,7 +12,6 @@ src/import_dialog.py
 build*.zip
 *.pyc
 *.un~
-*.html
 .coverage
 htmlcov/
 docs/_build
