@@ -2,8 +2,6 @@ from itertools import zip_longest
 import re
 from typing import Any, Callable, Dict, Iterable, List, Optional, TYPE_CHECKING
 
-from . import model_data as lpcg_models
-
 if TYPE_CHECKING:
     from anki.notes import Note
 
@@ -259,7 +257,7 @@ def add_notes(col: Any, note_constructor: Callable,
     """
     added = 0
     for line in _poemlines_from_textlines(text, group_lines):
-        n = note_constructor(col, col.models.byName(lpcg_models.NAME))
+        n = note_constructor(col, col.models.byName("LPCG 1.0"))
         line.populate_note(n, title, tags, context_lines, recite_lines, deck_id)
         col.addNote(n)
         added += 1
