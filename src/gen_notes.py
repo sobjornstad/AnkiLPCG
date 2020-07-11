@@ -178,7 +178,7 @@ def groups_of_n(iterable: Iterable, n: int) -> Iterable:
     return zip_longest(*[iter(iterable)]*n)
 
 
-def poemlines_from_textlines(text_lines: List[str], group_lines: int) -> List[PoemLine]:
+def _poemlines_from_textlines(text_lines: List[str], group_lines: int) -> List[PoemLine]:
     """
     Given a list of cleansed text lines, create a list of PoemLine objects
     from it. These are each capable of constructing a correct note testing
@@ -258,7 +258,7 @@ def add_notes(col: Any, note_constructor: Callable,
     caller should offer an appropriate error message in this case.
     """
     added = 0
-    for line in poemlines_from_textlines(text, group_lines):
+    for line in _poemlines_from_textlines(text, group_lines):
         n = note_constructor(col, col.models.byName(lpcg_models.NAME))
         line.populate_note(n, title, tags, context_lines, recite_lines, deck_id)
         col.addNote(n)

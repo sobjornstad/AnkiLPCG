@@ -3,6 +3,7 @@ pylint>=2.5.2,<3.0
 yapf>=0.30.0,<1.0
 mypy>=0.770,<1.0
 pip>=20.1
+pytest-cov
 
 pyqt5==5.15
 anki==2.1.26
