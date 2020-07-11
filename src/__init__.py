@@ -1,8 +1,9 @@
 """
 LPCG - Lyrics/Poetry Cloze Generator
-version 1.2.1
-Copyright (c) 2016-2019 Soren Bjornstad <contact@sorenbjornstad.com>
-License: GNU AGPL, version 3 or later: <http://www.gnu.org/licenses/agpl.html>
+Copyright (c) 2016-2020 Soren Bjornstad <contact@sorenbjornstad.com>
+
+License: GNU AGPL, version 3 or later.
+See LICENSE file or <http://www.gnu.org/licenses/agpl.html> for details.
 """
 
 import sys
