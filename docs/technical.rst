@@ -107,9 +107,4 @@ As of version 1.3, LPCG inverts the color of cloze deletions in night mode,
 as the default solid blue is quite difficult to read in night mode
 on many screens.
 If you don't like the color,
-you can change it in the styling rule `.nightMode .cloze`.
-If you want it back to how it was in LPCG 1.2,
-just leave the `{braces}` empty instead of removing the rule --
-if you remove the rule,
-LPCG will assume you haven't gotten the update yet
-and inject the code back into your template next time you start Anki.
+you can change it in the styling rule ``.nightMode .cloze``.
