@@ -1,8 +1,6 @@
 from itertools import zip_longest
 import re
-from typing import Any, Dict, Iterable, List, Optional
-
-from anki.notes import Note
+from typing import Any, Callable, Dict, Iterable, List, Optional
 
 from . import model_data as lpcg_models
 
@@ -12,7 +10,7 @@ class PoemLine:
         self.successor = None
         self.seq = -1
 
-    def populate_note(self, note: Note, title: str, tags: List[str],
+    def populate_note(self, note: 'Note', title: str, tags: List[str],
                       context_lines: int, recite_lines: int, deck_id: int) -> None:
         """
         Fill the _note_ with content testing on the current line.
@@ -80,7 +78,7 @@ class Beginning(PoemLine):
         """
         raise NotImplementedError
 
-    def populate_note(self, note: Note, title: str, tags: List[str],
+    def populate_note(self, note: 'Note', title: str, tags: List[str],
                       context_lines: int, deck_id: int) -> None:
         raise AssertionError("The Beginning node cannot be used to populate a note.")
 
@@ -241,7 +239,8 @@ def process_text(string: str, config: Dict[str, Any]) -> List[str]:
     return text
 
 
-def add_notes(col: Any, title: str, tags: List[str], text: List[str], deck_id: int,
+def add_notes(col: Any, note_constructor: Callable,
+              title: str, tags: List[str], text: List[str], deck_id: int,
               context_lines: int, group_lines: int, recite_lines: int):
     """
     Generate notes from the given title, tags, poem text, and number of
@@ -255,7 +254,7 @@ def add_notes(col: Any, title: str, tags: List[str], text: List[str], deck_id: i
     """
     added = 0
     for line in poemlines_from_textlines(text, group_lines):
-        n = Note(col, col.models.byName(lpcg_models.NAME))
+        n = note_constructor(col, col.models.byName(lpcg_models.NAME))
         line.populate_note(n, title, tags, context_lines, recite_lines, deck_id)
         col.addNote(n)
         added += 1

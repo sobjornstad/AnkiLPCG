@@ -1,10 +1,12 @@
 import codecs
 
-from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
+# pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QDialog
 
 import aqt
-from aqt.qt import QAction  # pylint: disable=no-name-in-module
+from aqt.qt import QAction
 from aqt.utils import getFile, showWarning, askUser, tooltip
+from anki.notes import Note
 
 from . import import_dialog as lpcg_form
 from .gen_notes import add_notes, process_text
@@ -61,7 +63,7 @@ class LPCGDialog(QDialog):
         did = self.deckChooser.selectedId()
 
         try:
-            notes_generated = add_notes(self.mw.col, title, tags, text, did,
+            notes_generated = add_notes(self.mw.col, Note, title, tags, text, did,
                                         context_lines, group_lines, recite_lines)
         except KeyError as e:
             showWarning(
