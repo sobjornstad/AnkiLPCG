@@ -145,12 +145,13 @@ class ModelData(ABC):
 
 
 def upgrade_onethreeoh(mod):
-    mod['css'] += "\n\n"
-    mod['css'] += dedent("""
-        .nightMode .cloze {
-            filter: invert(85%);
-        }
-        """).strip()
+    if '.nightMode .cloze' not in mod['css']:
+        mod['css'] += "\n\n"
+        mod['css'] += dedent("""
+            .nightMode .cloze {
+                filter: invert(85%);
+            }
+            """).strip()
     mod['css'] = mod['css'].replace('margin-left: -30px;', '')
 
     assert len(mod['tmpls']) == 1, "LPCG note type has extra templates!"

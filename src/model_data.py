@@ -60,10 +60,6 @@ p {
  margin-left: -30px;
 }
 
-.nightMode .cloze {
- filter: invert(85%);
-}
-
 .title {
  text-align: center;
  font-size: small;
