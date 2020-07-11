@@ -9,7 +9,7 @@ from aqt.utils import getFile, showWarning, askUser, tooltip
 from anki.notes import Note
 
 from . import import_dialog as lpcg_form
-from .gen_notes import add_notes, process_text
+from .gen_notes import add_notes, cleanse_text
 from . import model_data as lpcg_models
 
 
@@ -55,7 +55,7 @@ class LPCGDialog(QDialog):
             return
 
         tags = self.mw.col.tags.split(self.form.tagsBox.text())
-        text = process_text(self.form.textBox.toPlainText().strip(),
+        text = cleanse_text(self.form.textBox.toPlainText().strip(),
                             self.mw.addonManager.getConfig(__name__))
         context_lines = self.form.contextLinesSpin.value()
         recite_lines = self.form.reciteLinesSpin.value()
