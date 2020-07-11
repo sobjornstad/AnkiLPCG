@@ -1,4 +1,7 @@
 {
     "endOfStanzaMarker": " ⊗",
-    "endOfTextMarker": " □"
+    "endOfTextMarker": " □",
+    "systemConfigDoNotChange": {
+        "noteTypeVersion": "none"
+    }
 }
