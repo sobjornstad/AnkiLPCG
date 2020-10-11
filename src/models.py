@@ -144,7 +144,7 @@ class ModelData(ABC):
         return current_version == cls.version
 
 
-def upgrade_onethreeoh(mod):
+def upgrade_none_to_onethreeoh(mod):
     "Upgrade LPCG model from unversioned to version 1.3.0."
     mm = aqt.mw.col.models
     field = mm.newField("Prompt")
@@ -175,11 +175,36 @@ def upgrade_onethreeoh(mod):
     )
 
 
+def upgrade_onethreeoh_to_onethreeone(mod):
+    "Upgrade LPCG model from 1.3.0 to version 1.3.1."
+    mm = aqt.mw.col.models
+    mm.addField(mod, mm.newField("Author"))
+
+    mod['css'].replace('.title', '.title, .author')
+
+    assert len(mod['tmpls']) == 1, "LPCG note type has extra templates!"
+    for side in ['qfmt', 'afmt']:
+        mod['tmpls'][0][side] = mod['tmpls'][0][side].replace(
+            '<div class="title">{{Title}} {{Sequence}}</div>',
+            dedent('''
+                <div class="title">{{Title}} {{Sequence}}</div>
+                {{#Author}}<div class="author">{{Author}}</div>{{/Author}}
+            ''').strip()
+        )
+
+
+def upgrade_unversioned_to_onethreeone(mod):
+    "Upgrade LPCG model from 1.3.0 to version 1.3.1."
+    upgrade_none_to_onethreeoh(mod)
+    upgrade_onethreeoh_to_onethreeone(mod)
+
+
 class LpcgOne(ModelData):
     class LpcgOneTemplate(TemplateData):
         name = "LPCG1"
         front = """
             <div class="title">{{Title}} {{Sequence}}</div>
+            {{#Author}}<div class="author">{{Author}}</div>{{/Author}}
 
             <br>
 
@@ -193,6 +218,7 @@ class LpcgOne(ModelData):
         """
         back = """
             <div class="title">{{Title}} {{Sequence}}</div>
+            {{#Author}}<div class="author">{{Author}}</div>{{/Author}}
 
             <br>
 
@@ -203,7 +229,7 @@ class LpcgOne(ModelData):
         """
 
     name = "LPCG 1.0"
-    fields = ("Line", "Context", "Title", "Sequence", "Prompt")
+    fields = ("Line", "Context", "Title", "Author", "Sequence", "Prompt")
     templates = (LpcgOneTemplate,)
     styling = """
         .card {
@@ -234,7 +260,7 @@ class LpcgOne(ModelData):
             filter: invert(85%);
         }
 
-        .title {
+        .title, .author {
             text-align: center;
             font-size: small;
         }
@@ -245,9 +271,10 @@ class LpcgOne(ModelData):
     """
     sort_field = "Sequence"
     is_cloze = False
-    version = "1.3.0"
+    version = "1.3.1"
     upgrades = (
-        ("none", "1.3.0", upgrade_onethreeoh),
+        ("none", "1.3.0", upgrade_none_to_onethreeoh),
+        ("1.3.0", "1.3.1", upgrade_onethreeoh_to_onethreeone),
     )
 
 

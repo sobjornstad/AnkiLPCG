@@ -2,6 +2,11 @@
 Changelog
 =========
 
+LPCG 1.3.1
+==========
+
+* Added Author field.
+
 LPCG 1.3.0
 ==========
 

@@ -40,6 +40,23 @@
       </widget>
      </item>
      <item row="4" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>&amp;Author</string>
+       </property>
+       <property name="buddy">
+        <cstring>authorBox</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="authorBox">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>Ta&amp;gs</string>
@@ -49,10 +66,10 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="6" column="1">
       <widget class="QLineEdit" name="tagsBox"/>
      </item>
-     <item row="6" column="0">
+     <item row="8" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Lines of Conte&amp;xt</string>
@@ -62,7 +79,7 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="8" column="1">
       <widget class="QSpinBox" name="contextLinesSpin">
        <property name="minimumSize">
         <size>
@@ -84,7 +101,7 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
+     <item row="9" column="0">
       <widget class="QLabel" name="label_5">
        <property name="text">
         <string>Lines to &amp;Recite</string>
@@ -94,7 +111,7 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="9" column="1">
       <widget class="QSpinBox" name="reciteLinesSpin">
        <property name="toolTip">
         <string>Number of occluded lines shown on the answer side of each card.</string>
@@ -107,7 +124,7 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="0">
+     <item row="10" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
         <string>Lines in Gro&amp;ups of</string>
@@ -117,7 +134,7 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="1">
+     <item row="10" column="1">
       <widget class="QSpinBox" name="groupLinesSpin">
        <property name="minimum">
         <number>1</number>
@@ -215,6 +232,7 @@
  </widget>
  <tabstops>
   <tabstop>titleBox</tabstop>
+  <tabstop>authorBox</tabstop>
   <tabstop>tagsBox</tabstop>
   <tabstop>contextLinesSpin</tabstop>
   <tabstop>reciteLinesSpin</tabstop>
