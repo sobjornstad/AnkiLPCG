@@ -168,6 +168,7 @@ def mock_note():
     col = MockCollection()
     note_constructor = MockNote
     title = "'Tis Winter"
+    author = "Samuel Longfellow"
     tags = ["poem", "test"]
     deck_id = 1
     context_lines = 2
@@ -185,6 +186,7 @@ def test_render_default_settings(mock_note):
     assert len(col.notes) == 16
 
     assert col.notes[0]['Title'] == mock_note['title']
+    assert col.notes[0]['Author'] == mock_note['author']
     assert col.notes[0].tags == mock_note['tags']
     assert col.notes[0]['Sequence'] == "1"
     assert col.notes[0]['Context'] == "<p>[Beginning]</p>"
@@ -192,6 +194,7 @@ def test_render_default_settings(mock_note):
     assert 'Prompt' not in col.notes[0]
 
     assert col.notes[3]['Title'] == mock_note['title']
+    assert col.notes[3]['Author'] == mock_note['author']
     assert col.notes[3].tags == mock_note['tags']
     assert col.notes[3]['Sequence'] == "4"
     assert col.notes[3]['Context'] == (
@@ -242,6 +245,7 @@ def test_render_groups_of_three(mock_note):
     assert len(col.notes) == 6
 
     assert col.notes[0]['Title'] == mock_note['title']
+    assert col.notes[0]['Author'] == mock_note['author']
     assert col.notes[0].tags == mock_note['tags']
     assert col.notes[0]['Sequence'] == "1"
     assert col.notes[0]['Context'] == "<p>[Beginning]</p>"

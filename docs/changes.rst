@@ -2,6 +2,24 @@
 Changelog
 =========
 
+LPCG 1.4.0
+==========
+
+Released on November 15, 2020.
+
+* Add an *Author* field to the note type,
+  which can optionally be set when adding poems
+  (thanks to @cashweaver).
+  The author displays just underneath the title and index when reviewing,
+  if present.
+* The Add Notes access key has been changed from :kbd:`a` to :kbd:`d`
+  to resolve a conflict with :guilabel:`Author`
+  (all the letters in *Author* were already taken!).
+* Allow quotation marks to be used in the title of a poem,
+  now that Anki is able to escape quotation marks in searches.
+* Add screenshots to the README.
+
+
 LPCG 1.3.0
 ==========
 
