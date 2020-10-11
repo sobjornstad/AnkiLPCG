@@ -2,6 +2,12 @@
 Changelog
 =========
 
+LPCG 1.4.0
+==========
+
+* Added Author field.
+* Changed Add Notes hotkey from "a" to "d".
+
 LPCG 1.3.0
 ==========
 
