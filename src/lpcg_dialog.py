@@ -45,7 +45,9 @@ class LPCGDialog(QDialog):
         if not title:
             showWarning("You must enter a title for this poem.")
             return
-        if self.mw.col.findNotes(f'"note:{models.LpcgOne.name}" "Title:{title}"'):  # pylint: disable=no-member
+        escaped_title = title.replace('"', '\\"')
+        if self.mw.col.findNotes(f'"note:{models.LpcgOne.name}" '  # pylint: disable=no-member
+                                 f'"Title:{escaped_title}"'):
             showWarning("You already have a poem by that title in your "
                         "database. Please check to see if you've already "
                         "added it, or use a different name.")
