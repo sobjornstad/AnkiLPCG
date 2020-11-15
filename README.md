@@ -16,9 +16,15 @@ or at your option, any later version.
 * **See what's changed**:
   See the [changelog][] page of the documentation.
 
-
 [Anki]: https://apps.ankiweb.net
 [awp]: https://ankiweb.net/shared/info/2084557901
 [doc]: https://ankilpcg.readthedocs.io/en/latest/index.html
 [getting help]: https://ankilpcg.readthedocs.io/en/latest/index.html#getting-help
 [changelog]: https://ankilpcg.readthedocs.io/en/latest/changes.html
+
+
+## Screenshots
+
+<img src="docs/screenshots/importing.png" alt="Importing content into LPCG" width=300>
+<img src="docs/screenshots/studying.png" alt="Studying on the desktop" width=300>
+<img src="docs/screenshots/iphone.jpg" alt="Studying on an iPhone" width=200>
