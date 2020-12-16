@@ -193,12 +193,6 @@ def upgrade_onethreeoh_to_onefouroh(mod):
         )
 
 
-def upgrade_unversioned_to_onefouroh(mod):
-    "Upgrade LPCG model from 1.3.0 to version 1.4.0."
-    upgrade_none_to_onethreeoh(mod)
-    upgrade_onethreeoh_to_onefouroh(mod)
-
-
 class LpcgOne(ModelData):
     class LpcgOneTemplate(TemplateData):
         name = "LPCG1"
