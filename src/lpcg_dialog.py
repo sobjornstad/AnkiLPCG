@@ -56,6 +56,7 @@ class LPCGDialog(QDialog):
                         '"Open File" button to import a text file.')
             return
 
+        author = self.form.authorBox.text().strip()
         tags = self.mw.col.tags.split(self.form.tagsBox.text())
         text = cleanse_text(self.form.textBox.toPlainText().strip(),
                             self.mw.addonManager.getConfig(__name__))
@@ -65,7 +66,7 @@ class LPCGDialog(QDialog):
         did = self.deckChooser.selectedId()
 
         try:
-            notes_generated = add_notes(self.mw.col, Note, title, tags, text, did,
+            notes_generated = add_notes(self.mw.col, Note, title, author, tags, text, did,
                                         context_lines, group_lines, recite_lines)
         except KeyError as e:
             showWarning(
