@@ -1,0 +1,11 @@
+-r requirements.txt
+
+pytest==5.4.3
+pytest-cov==2.10.0
+pylint>=2.5.2,<3.0
+yapf>=0.30.0,<1.0
+mypy>=0.770,<1.0
+
+pyqt5==5.15
+anki==2.1.44
+aqt==2.1.44
