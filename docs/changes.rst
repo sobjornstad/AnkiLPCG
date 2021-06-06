@@ -17,6 +17,7 @@ Released on November 15, 2020.
   (all the letters in *Author* were already taken!).
 * Allow quotation marks to be used in the title of a poem,
   now that Anki is able to escape quotation marks in searches.
+* Make the default values of the import spinboxes configurable.
 * Add screenshots to the README.
 
 

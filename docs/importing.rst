@@ -21,6 +21,9 @@ so you know what you're reviewing.
 It's also used to warn you
 if you already have a poem by that title in your collection.
 
+The **Author**, if provided, will also appear at the top of your cards,
+underneath the title.
+
 The **Tags** and **Deck**
 will be attached to all notes generated from this poem
 and work the same way as they do elsewhere in Anki.
@@ -101,7 +104,9 @@ Generation settings
 The three numeric spin-boxes
 allow you to customize how much text appears on each card.
 Tweaking these settings is entirely optional;
-the defaults are sufficient for most poems.
+the default values are sufficient for most poems.
+You can change the default values in the add-on config
+(:menuselection:`Tools --> Add-ons --> LPCG --> Config`).
 
 Lines of Context
     The number of lines that will be shown
