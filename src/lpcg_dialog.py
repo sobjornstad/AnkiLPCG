@@ -38,6 +38,11 @@ class LPCGDialog(QDialog):
         self.form.openFileButton.clicked.connect(self.onOpenFile)
         self.form.helpButton.clicked.connect(self.onHelp)
 
+        self.addonConfig = self.mw.addonManager.getConfig(__name__)
+        self.form.contextLinesSpin.setValue(self.addonConfig['defaultLinesOfContext'])
+        self.form.reciteLinesSpin.setValue(self.addonConfig['defaultLinesToRecite'])
+        self.form.groupLinesSpin.setValue(self.addonConfig['defaultLinesInGroupsOf'])
+
     def accept(self):
         "On close, create notes from the contents of the poem editor."
         title = self.form.titleBox.text().strip()
@@ -59,8 +64,7 @@ class LPCGDialog(QDialog):
             return
 
         tags = self.mw.col.tags.split(self.form.tagsBox.text())
-        text = cleanse_text(self.form.textBox.toPlainText().strip(),
-                            self.mw.addonManager.getConfig(__name__))
+        text = cleanse_text(self.form.textBox.toPlainText().strip(), self.addonConfig)
         context_lines = self.form.contextLinesSpin.value()
         recite_lines = self.form.reciteLinesSpin.value()
         group_lines = self.form.groupLinesSpin.value()
