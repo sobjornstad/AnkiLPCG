@@ -205,6 +205,9 @@
        <property name="text">
         <string>A&amp;dd notes</string>
        </property>
+       <property name="shortcut">
+        <string>Ctrl+Return</string>
+       </property>
        <property name="autoDefault">
         <bool>false</bool>
        </property>
