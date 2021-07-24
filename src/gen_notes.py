@@ -17,7 +17,7 @@ class PoemLine:
         """
         Fill the _note_ with content testing on the current line.
         """
-        note.model()['did'] = deck_id  # type: ignore
+        note.note_type()['did'] = deck_id  # type: ignore
         note.tags = tags
         note['Title'] = title
         note['Author'] = author
@@ -259,7 +259,7 @@ def add_notes(col: Any, note_constructor: Callable,
     """
     added = 0
     for line in _poemlines_from_textlines(text, group_lines):
-        n = note_constructor(col, col.models.byName("LPCG 1.0"))
+        n = note_constructor(col, col.models.by_name("LPCG 1.0"))
         line.populate_note(n, title, author, tags, context_lines, recite_lines, deck_id)
         col.addNote(n)
         added += 1

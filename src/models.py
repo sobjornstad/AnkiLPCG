@@ -25,14 +25,14 @@ from abc import ABC
 import inspect
 import re
 from textwrap import dedent
-from typing import Callable, Dict, Iterable, List, Optional, Tuple, Type
+from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple, Type
 import sys
 
 import aqt
 from aqt.utils import askUser, showInfo
 from anki.consts import MODEL_CLOZE
-from anki.models import Template as AnkiTemplate
-from anki.models import NoteType as AnkiModel
+from anki.models import TemplateDict as AnkiTemplate
+from anki.models import NotetypeDict as AnkiModel
 
 
 class TemplateData(ABC):
@@ -48,7 +48,7 @@ class TemplateData(ABC):
         "Create and return an Anki template object for this model definition."
         assert aqt.mw is not None, "Tried to use models before Anki is initialized!"
         mm = aqt.mw.col.models
-        t = mm.newTemplate(cls.name)
+        t = mm.new(cls.name)
         t['qfmt'] = dedent(cls.front).strip()
         t['afmt'] = dedent(cls.back).strip()
         return t
@@ -77,8 +77,8 @@ class ModelData(ABC):
         mm = aqt.mw.col.models
         model = mm.new(cls.name)
         for i in cls.fields:
-            field = mm.newField(i)
-            mm.addField(model, field)
+            field = mm.new_field(i)
+            mm.add_field(model, field)
         for template in cls.templates:
             t = template.to_template()
             mm.addTemplate(model, t)
@@ -104,7 +104,7 @@ class ModelData(ABC):
         Returns the new version the model is at.
         """
         assert aqt.mw is not None, "Tried to use models before Anki is initialized!"
-        model = aqt.mw.col.models.byName(cls.name)
+        model = aqt.mw.col.models.by_name(cls.name)
 
         at_version = current_version
         for cur_ver, new_ver, func in cls.upgrades:
@@ -123,7 +123,7 @@ class ModelData(ABC):
         """
         assert aqt.mw is not None, "Tried to use models before Anki is initialized!"
         mm = aqt.mw.col.models
-        model = mm.byName(cls.name)
+        model = mm.by_name(cls.name)
         return model is not None
 
     @classmethod
@@ -147,8 +147,8 @@ class ModelData(ABC):
 def upgrade_none_to_onethreeoh(mod):
     "Upgrade LPCG model from unversioned to version 1.3.0."
     mm = aqt.mw.col.models
-    field = mm.newField("Prompt")
-    mm.addField(mod, field)
+    field = mm.new_field("Prompt")
+    mm.add_field(mod, field)
 
     if '.nightMode .cloze' not in mod['css']:
         mod['css'] += "\n\n"
@@ -178,7 +178,7 @@ def upgrade_none_to_onethreeoh(mod):
 def upgrade_onethreeoh_to_onefouroh(mod):
     "Upgrade LPCG model from 1.3.0 to version 1.4.0."
     mm = aqt.mw.col.models
-    mm.addField(mod, mm.newField("Author"))
+    mm.add_field(mod, mm.new_field("Author"))
 
     mod['css'] = mod['css'].replace('.title {', '.title, .author {')
 
