@@ -2,6 +2,18 @@
 Changelog
 =========
 
+LPCG 1.4.1
+==========
+
+Released on July 24, 2021.
+
+* Update all deprecated function and type names
+  to current versions as of Anki 2.1.45.
+* Drop support for earlier Anki versions.
+* Accept :kbd:`Ctrl+Enter` for :guilabel:`Add Notes` in the poem editor,
+  just like in Anki's standard add-notes dialog.
+
+
 LPCG 1.4.0
 ==========
 
