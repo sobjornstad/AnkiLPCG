@@ -25,8 +25,10 @@ The source is available `at GitHub`_.
 #. Create a virtual environment with ``python -m venv venv``,
    and activate it (usually ``. venv/bin/activate``).
 #. Install Python dependencies with ``pip install -r requirements.txt``.
-   LPCG is tested on Python 3.7 but will probably work on 3.6 or 3.8 too.
-#. Ensure you have PyQt5 and the ``pyuic5`` command available.
+   LPCG is tested on Python 3.10 but will work on 3.9 too.
+#. Ensure you have PyQt5/6 and the ``pyuic5`` // ``pyuic6`` command available
+   (depending on which version(s) of Qt you want to build against;
+   both 5 and 6 are supported at the time of this writing).
 #. Run ``make`` to generate code for the dialog from Qt Designer
    (among other things).
 

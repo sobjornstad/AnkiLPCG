@@ -2,6 +2,13 @@
 Changelog
 =========
 
+LPCG 1.4.2
+==========
+
+* Add support for Qt 6, in advance of Anki moving to that GUI toolkit version.
+  Builds of Anki that use Qt 5 will continue to work.
+
+
 LPCG 1.4.1
 ==========
 

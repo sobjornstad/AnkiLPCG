@@ -8,7 +8,7 @@ __pycache__/
 venv/
 
 # build outputs
-src/import_dialog.py
+src/import_dialog*.py
 build*.zip
 *.pyc
 *.un~

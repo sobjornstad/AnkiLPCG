@@ -1,16 +1,21 @@
+"""
+Dialog box for importing texts.
+"""
+
 import codecs
 
 # pylint: disable=no-name-in-module
-from PyQt5.QtWidgets import QDialog
-from PyQt5.QtGui import QDesktopServices
-from PyQt5.QtCore import QUrl
-
-import aqt
-from aqt.qt import QAction  # type: ignore
+from aqt.deckchooser import DeckChooser
+from aqt.qt import QDesktopServices, QDialog, QUrl, qtmajor
 from aqt.utils import getFile, showWarning, askUser, tooltip
 from anki.notes import Note
 
-from . import import_dialog as lpcg_form
+if qtmajor > 5:
+    from . import import_dialog6 as lpcg_form
+else:
+    from . import import_dialog5 as lpcg_form  # type: ignore
+
+# pylint: disable=wrong-import-position
 from .gen_notes import add_notes, cleanse_text
 from . import models
 
@@ -30,8 +35,7 @@ class LPCGDialog(QDialog):
         QDialog.__init__(self)
         self.form = lpcg_form.Ui_Dialog()
         self.form.setupUi(self)
-        self.deckChooser = aqt.deckchooser.DeckChooser(
-            self.mw, self.form.deckChooser)
+        self.deckChooser = DeckChooser(self.mw, self.form.deckChooser)
 
         self.form.addCardsButton.clicked.connect(self.accept)
         self.form.cancelButton.clicked.connect(self.reject)

@@ -1,6 +1,7 @@
 """
 LPCG - Lyrics/Poetry Cloze Generator
-Copyright (c) 2016-2020 Soren Bjornstad <contact@sorenbjornstad.com>
+Copyright (c) 2016-2022 Soren Bjornstad <anki@sorenbjornstad.com>
+                        and the LPCG community.
 
 License: GNU AGPL, version 3 or later.
 See LICENSE file or <http://www.gnu.org/licenses/agpl.html> for details.
@@ -29,7 +30,7 @@ if 'pytest' not in sys.modules:
                 "and respond yes to the prompt.")
             return
         dialog = LPCGDialog(aqt.mw)
-        dialog.exec_()
+        dialog.exec()
 
     if aqt.mw is not None:
         action = QAction(aqt.mw)

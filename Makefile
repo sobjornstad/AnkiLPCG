@@ -1,15 +1,18 @@
-.PHONY: all docs forms zip clean
+.PHONY: all addon docs forms clean
 
-all: docs forms zip
+all: docs forms addon
 docs:
 	$(MAKE) -C docs html
-forms: src/import_dialog.py
-zip: build.zip
+forms: src/import_dialog5.py src/import_dialog6.py
+addon: build.ankiaddon
 
-src/import_dialog.py: designer/import_dialog.ui 
+src/import_dialog5.py: designer/import_dialog.ui 
 	pyuic5 $^ > $@
 
-build.zip: src/*
+src/import_dialog6.py: designer/import_dialog.ui 
+	pyuic6 $^ > $@
+
+build.ankiaddon: src/*
 	rm -f $@
 	rm -f src/meta.json
 	rm -rf src/__pycache__
@@ -21,4 +24,4 @@ clean:
 	rm -f src/*.pyc
 	rm -f src/__pycache__
 	rm -f src/import_dialog.py
-	rm -f build.zip
+	rm -f build.ankiaddon
