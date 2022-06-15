@@ -1,13 +1,19 @@
 .PHONY: all docs forms zip clean
 
-all: docs forms zip
+all: docs 6forms zip
 docs:
 	$(MAKE) -C docs html
-forms: src/import_dialog.py
+forms: 5forms 6forms
+#forms: src/import_dialog.py
+5forms: $(patsubst designer/%_dialog.ui,src/%_dialog5.py,$(wildcard designer/*))
+6forms: $(patsubst designer/%_dialog.ui,src/%_dialog6.py,$(wildcard designer/*))
 zip: build.zip
 
-src/import_dialog.py: designer/import_dialog.ui 
+src/import_dialog5.py: designer/import_dialog.ui
 	pyuic5 $^ > $@
+
+src/import_dialog6.py: designer/import_dialog.ui
+	pyuic6 $^ > $@
 
 build.zip: src/*
 	rm -f $@

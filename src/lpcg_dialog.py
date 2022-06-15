@@ -1,16 +1,15 @@
 import codecs
 
-# pylint: disable=no-name-in-module
-from PyQt5.QtWidgets import QDialog
-from PyQt5.QtGui import QDesktopServices
-from PyQt5.QtCore import QUrl
-
 import aqt
-from aqt.qt import QAction  # type: ignore
+from aqt.qt import QUrl, QDesktopServices, QDialog, qtmajor, QAction, Qt  # type: ignore
 from aqt.utils import getFile, showWarning, askUser, tooltip
 from anki.notes import Note
 
-from . import import_dialog as lpcg_form
+if qtmajor > 5:
+  from . import import_dialog6 as lpcg_form
+else:
+  from . import import_dialog5 as lpcg_form  # type: ignore
+
 from .gen_notes import add_notes, cleanse_text
 from . import models
 
@@ -24,10 +23,10 @@ class LPCGDialog(QDialog):
     front of lines). LPCG then processes it into notes with two lines of
     context and adds them to the user's collection.
     """
-    def __init__(self, mw):
+    def __init__(self, mw: aqt.main.AnkiQt):
+        QDialog.__init__(self)
         self.mw = mw
 
-        QDialog.__init__(self)
         self.form = lpcg_form.Ui_Dialog()
         self.form.setupUi(self)
         self.deckChooser = aqt.deckchooser.DeckChooser(
@@ -44,7 +43,7 @@ class LPCGDialog(QDialog):
         self.form.groupLinesSpin.setValue(self.addonConfig['defaultLinesInGroupsOf'])
 
     def accept(self):
-        "On close, create notes from the contents of the poem editor."
+        """On close, create notes from the contents of the poem editor."""
         title = self.form.titleBox.text().strip()
 
         if not title:
@@ -88,6 +87,12 @@ class LPCGDialog(QDialog):
             super(LPCGDialog, self).accept()
             self.mw.reset()
             tooltip("%i notes added." % notes_generated)
+
+        self.deckChooser.cleanup()
+
+    def reject(self):
+        self.deckChooser.cleanup()
+        super().reject()
 
     def onOpenFile(self):
         """
