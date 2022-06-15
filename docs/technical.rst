@@ -24,6 +24,11 @@ Line
     because the editor doesn’t use the same styling as the review window
     and this can't easily be customized.
 
+    Each indented line will render as indented using ``<span>`` tags. If
+    multiple indents are desired, use tabs to indent each line instead of
+    spaces. All leading spaces will be converted into a single indent whereas
+    each tab will be treated as a separate indent.
+
 Context
     Contains the several lines prior to *Line*,
     to give you an idea of what to recite.

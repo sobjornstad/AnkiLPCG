@@ -84,6 +84,30 @@ class TestCleanseText:
         assert result[3] == f"{INDENT_HTML_START}To do it en masse,{INDENT_HTML_END}"
         assert result[4] == "Your remembering would turn out much worsal.X"
 
+    def test_multiple_indentation(self):
+        dijkstra = dedent("""
+		function Dijkstra(Graph, source):
+			for each vertex v in Graph.Vertices:
+				dist[v] ← INFINITY
+				prev[v] ← UNDEFINED
+				add v to Q
+			dist[source] ← 0
+			while Q is not empty:
+				u ← vertex in Q with min dist[u]
+				remove u from Q
+				for each neighbor v of u still in Q:
+					alt ← dist[u] + Graph.Edges(u, v)
+					if alt < dist[v] and dist[u] is not INFINITY:
+						dist[v] ← alt
+						prev[v] ← u
+			return dist[], prev[]
+		""").strip()
+        result = cleanse_text(dijkstra, MOCK_CLEANSE_CONFIG)
+        assert result[0] == "function Dijkstra(Graph, source):"
+        assert result[1] == f"{INDENT_HTML_START}for each vertex v in Graph.Vertices:{INDENT_HTML_END}"
+        assert result[2] == f"{INDENT_HTML_START*2}dist[v] ← INFINITY{INDENT_HTML_END*2}"
+        assert result[-2] == f"{INDENT_HTML_START*4}prev[v] ← u{INDENT_HTML_END*4}"
+        assert len(result) == 15
     
     def test_line_comment(self):
         limerick = dedent("""
