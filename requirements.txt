@@ -1,6 +1,6 @@
 pip>=20.1
 
-pyqt6==6.3.0
-PyQt6-WebEngine==6.3.0
-anki==2.1.53
-aqt==2.1.53
+# requirements needs to be just sphinx so we don't have to configure the
+# read the docs installation environment.
+sphinx==5.0.1
+sphinx_rtd_theme==1.0.0
