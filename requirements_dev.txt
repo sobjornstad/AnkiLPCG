@@ -1,4 +1,4 @@
--e requirements.txt
+-r requirements.txt
 
 pyqt6==6.3.0
 PyQt6-WebEngine==6.3.0
