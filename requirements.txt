@@ -2,5 +2,5 @@ pip>=20.1
 
 # requirements needs to be just sphinx so we don't have to configure the
 # read the docs installation environment.
-sphinx==5.0.1
+sphinx==4.1.2
 sphinx_rtd_theme==1.0.0
