@@ -223,28 +223,45 @@ def cleanse_text(string: str, config: Dict[str, Any]) -> List[str]:
         return new_text
 
     text = string.splitlines()
+
     # record a level of indentation if appropriate
-    text = [re.sub(r'^[ \t]+', r'<indent>', i) for i in text]
+    # todo: multiple indentation support is not provided for spaces as of right
+    #       now.
+    all_spaces = "^[ ]+"
+    each_tab_at_start = "(((?<=^)|(?<=\t))\t)"
+    text = [re.sub(fr'({all_spaces}|{each_tab_at_start})', r'<indent>', i) for i in text]
+
     # remove comments and normalize blank lines
     text = [i.strip() for i in text if not i.startswith("#")]
     text = [re.sub(r'\s*\#.*$', '', i) for i in text]
     text = _normalize_blank_lines(text)
+
     # add end-of-stanza/poem markers where appropriate
     for i in range(len(text)):
         if i == len(text) - 1:
             text[i] += config['endOfTextMarker']
         elif not text[i+1].strip():
             text[i] += config['endOfStanzaMarker']
+
     # entirely remove all blank lines
     text = [i for i in text if i.strip()]
+
     # replace <indent>s with valid CSS
-    text = [re.sub(r'^<indent>(.*)$', r'<span class="indent">\1</span>', i)
+    def indent_replacer(match):
+        content = match.group('content')
+        indent_count = match.group('indents').count("<indent>")
+        open_tag = '<span class="indent">'
+        close_tag = "</span>"
+        return f"{open_tag*indent_count}{content}{close_tag*indent_count}"
+
+    text = [re.sub(r'^(?P<indents>(<indent>)+)(?P<content>.*)$', indent_replacer, i)
             for i in text]
+
     return text
 
 
 def add_notes(col: Any, note_constructor: Callable,
-              title: str, author:str, tags: List[str], text: List[str],
+              title: str, author: str, tags: List[str], text: List[str],
               deck_id: int, context_lines: int, group_lines: int, 
               recite_lines: int):
     """
