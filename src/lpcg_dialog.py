@@ -90,6 +90,7 @@ class LPCGDialog(QDialog):
 
         if notes_generated:
             super(LPCGDialog, self).accept()
+            self.deckChooser.cleanup()
             self.mw.reset()
             tooltip("%i notes added." % notes_generated)
 
