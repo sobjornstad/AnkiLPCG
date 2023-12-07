@@ -1,6 +1,6 @@
 """
 LPCG - Lyrics/Poetry Cloze Generator
-Copyright (c) 2016-2022 Soren Bjornstad <anki@sorenbjornstad.com>
+Copyright (c) 2016-2023 Soren Bjornstad <anki@sorenbjornstad.com>
                         and the LPCG community.
 
 License: GNU AGPL, version 3 or later.

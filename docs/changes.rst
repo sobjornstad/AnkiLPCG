@@ -2,6 +2,16 @@
 Changelog
 =========
 
+LPCG 1.4.3
+==========
+
+Released on December 6, 2023.
+
+* Fix “wrapped C/C++ object of type QPushButton has been deleted” error
+  occurring when generating cards with LPCG more than once per Anki session, or
+  opening the add or edit screen after using LPCG.
+
+
 LPCG 1.4.2
 ==========
 

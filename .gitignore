@@ -15,6 +15,7 @@ build*.zip
 .coverage
 htmlcov/
 docs/_build
+build.ankiaddon
 
 # anki add-on metadata file which appears when live-linking
 meta.json
