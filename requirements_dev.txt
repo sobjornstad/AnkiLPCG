@@ -7,5 +7,5 @@ yapf>=0.30.0
 mypy>=0.770
 
 pyqt6==6.2.2
-anki==2.1.50beta2
+anki==24.06
 aqt==2.1.50beta2
